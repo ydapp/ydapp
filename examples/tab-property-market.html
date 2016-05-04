@@ -91,6 +91,7 @@
 				pullRefresh: {
 					container: '#pullrefresh',
 					down: {
+						contentrefresh: '正在加载...',
 						callback: pulldownRefresh
 					},
 					up: {
@@ -118,41 +119,29 @@
 			};
 			var count = 0;
 			var myList = document.getElementById('myList');
-
+			var page = 0;
+			//下拉，相当于初始化
 			function pulldownRefresh() {
-				count = 1;
-				mui('#pullrefresh').pullRefresh().refresh(true);
-				// 初始化数据
-				mui.ajax(app.conf.propertyListUrl, {
-					dataType: 'text', //服务器返回json格式数据
-					type: 'post', //HTTP请求类型
-					timeout: 10000, //超时时间设置为10秒；
-					success: function(data, textStatus, xhr) {
-						//服务器返回响应，根据响应结果，分析是否登录成功；
-						if (data) {
-							myList.innerHTML = data;
-						} else {
-							myList.innerHTML = "加载数据失败了";
-						}
-						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-					}
-				});
+				page = 0;
+				myList.innerHTML="";
+				pullupLoad();
 			}
-
+			//往上推，加载更多数据
 			function pullupLoad() {
 				// 初始化数据
-				mui.ajax(app.conf.propertyListUrl, {
-					dataType: 'text', //服务器返回json格式数据
-					type: 'post', //HTTP请求类型
+				mui.ajax(app.conf.host + "/api/properties.json", {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
+					data:{"page":++page,"rows":10},
 					success: function(data, textStatus, xhr) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						if (data) {
-							myList.innerHTML = myList.innerHTML + data;
+							myList.innerHTML = myList.innerHTML + data.html;
 						} else {
 							myList.innerHTML = myList.innerHTML + "加载数据失败了";
 						}
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(data.total <= page*10); //参数为true代表没有更多数据了。
 					}
 				});
 			}
