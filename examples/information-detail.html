@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>房产咨询</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style type="text/css">
+			.cover-img {
+				width: 100%;
+				padding: 5px;
+			}
+			
+			.title {
+				text-align: center;
+			}
+			
+			.content {
+				padding: 5px;
+			}
+			
+			.content p {
+				color: #1A1A1A;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function(mui, doc) {
+			//mui初始化
+			mui.init();
+			mui.plusReady(function() {
+				plus.webview.currentWebview().setStyle({
+					scrollIndicator: 'none'
+				});
+			});
+			// 获得请求页面时携带的参数
+			var params = {};
+			(function() {
+				var qs = location.search.substring(1, location.search.length);
+				if (qs.length == 0) {
+					return;
+				}
+				qs = qs.replace(/\+/g, ' ');
+				var args = qs.split('&');
+				for (var i = 0; i < args.length; i++) {
+					var pair = args[i].split('=');
+					var name = decodeURIComponent(pair[0]);
+					var value = (pair.length == 2) ? decodeURIComponent(pair[1]) : name;
+					params[name] = value;
+				}
+			})();
+			// 获得页面宽度
+			params.viewWidth = document.body.clientWidth;
+			mui.ajax(app.conf.infoDetailUrl, {
+				data: params,
+				dataType: 'text', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data, textStatus, xhr) {
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					var content = document.body.querySelector('.mui-content');
+					if (data) {
+						content.innerHTML = data;
+					} else {
+						content.innerHTML = "加载数据失败了";
+					}
+				}
+			});
+		}(mui, document));
+	</script>
+
+</html>

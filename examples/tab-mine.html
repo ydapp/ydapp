@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/mine.css">
+		<link rel="stylesheet" href="../css/feedback-page.css" />
+	</head>
+
+	<body class="mui-fullscreen">
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="setting" class="mui-page">
+
+			<!--页面标题栏开始-->
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<h1 class="mui-center mui-title">我的</h1>
+			</div>
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="user-top">
+							<div class="user-info">
+								<div class="user-nick"><span id="userInfo_userNameId">登陆名称</span></div>
+								<div class="user-rank mui-h5"><span id="userInfo_userNameNick">姓名</span></div>
+								<div class="user-level mui-h5"><span id="userInfo_userTypeId">角色</span></div>
+							</div>
+							<div class="user-avatar">
+								<img src="../images/user.png" id="userInfo_userIcon" />
+							</div>
+						</div>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<a href="#recommendToDo" class="mui-navigate-right">报备待办信息</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="#recommendDone" class="mui-navigate-right">报备已办信息</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<a href="#phonebook" class="mui-navigate-right">通讯录</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<a href="#feedback" class="mui-navigate-right">问题反馈</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="#about" class="mui-navigate-right">关于团家宝经纪人 <i class="mui-pull-right update">V1.0.0</i></a>
+							</li>
+						</ul>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell" style="text-align: center;">
+								<a id='exit'>退出</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+		<!--单页面结束-->
+		<!--报备待办信息页面-->
+		<div id="recommendToDo" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>我的
+				</button>
+				<h1 class="mui-center mui-title">报备待办信息</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view" id="recommendToDoTable">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--报备已办信息页面-->
+		<div id="recommendDone" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>我的
+				</button>
+				<h1 class="mui-center mui-title">报备已办信息</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view" id="recommendDoneTable">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--推荐信息详情页面-->
+		<div id="recommendDetail" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>报备信息
+				</button>
+				<h1 class="mui-center mui-title">客户详情</h1>
+			</div>
+			<div id="recommendInfo" class="mui-page-content">
+			</div>
+		</div>
+		<!--通讯录页面-->
+		<div id="phonebook" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>我的
+				</button>
+				<h1 class="mui-center mui-title">通讯录</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view" id="phonebookList">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--
+    	作者：gadrel@163.com
+    	时间：2016-04-26
+    	描述：关于
+    -->
+		<div id="about" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>我的
+				</button>
+				<h1 class="mui-center mui-title">关于团家宝经纪人</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<p>关于团家宝</p>
+						<p>关于团家宝经纪人</p>
+						<p>这里可以给一些APP或公司的说明信息。</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--
+        	作者：gadrel@163.com
+        	时间：2016-04-26
+        	描述：问题反馈
+        -->
+		<div id="feedback" class="mui-page feedback">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>我的
+				</button>
+				<h1 class="mui-center mui-title">问题反馈</h1>
+			</div>
+			<div class="mui-page-content">
+				<p>问题和意见</p>
+				<div class="row mui-input-row">
+					<textarea id='question' class="mui-input-clear question" placeholder="请详细描述你的问题和意见..."></textarea>
+				</div>
+				<p>图片(选填,提供问题截图)</p>
+				<div id='image-list' class="row image-list">
+				</div>
+				<p>QQ/邮箱</p>
+				<div class="mui-input-row">
+					<input id='contact' type="text" class="mui-input-clear  contact" placeholder="(选填,方便我们联系你 )" />
+				</div>
+				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/mui.view.js "></script>
+	<script src="../js/app.js"></script>
+	<script src="../js/app.mine.js"></script>
+	<script src="../js/feedback-page.js"></script>
+	<script src="../js/template.js"></script>
+	<!--
+    	作者：gadrel@163.com
+    	时间：2016-04-29
+    	描述：通讯录模版
+    -->
+	<script id="tmpl_phonebook" type="text/html">
+		{{if success}} {{each result}}
+		<li class="mui-table-view-cell mui-media">
+			<a href="javascript:;">
+				<img class="mui-media-object mui-pull-left" src="../images/usercard.png">
+				<div class="mui-media-body">
+					{{$value.customerName}}<span class="mui-h5">【{{$value.buildingName}}】</span>
+					<p class='mui-ellipsis'>{{$value.customerTel}}</p>
+				</div>
+				<a href="tel:{{$value.customerTel}}" class="mui-btn mui-icon mui-icon-phone" style="font-size: 28px;color: blue;font-weight: bolder;"></a>
+			</a>
+		</li>
+		{{/each}} {{else}}
+		<li class="mui-table-view-cell">获取通讯录数据失败</li>
+		{{/if}}
+	</script>
+	<script id="tmpl_recommendInfo" type="text/html">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						客户姓名
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{customerName}}
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						联系电话
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{customerTel}}
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						意向城市
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{cityName}}
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						意向楼盘
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{buildingName}}
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						看房日期
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{customerPresentDate}}
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						推荐人
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{refreeNick}}（{{refreeName}}）
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						备注
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{remark}}
+					</div>
+				</div>
+			</li>
+		</ul>
+	</script>
+	<script type="text/javascript" charset="utf-8">
+		(function(mui, doc) {
+			//mui初始化
+			mui.init();
+			mui.plusReady(function() {
+				plus.webview.currentWebview().setStyle({
+					scrollIndicator: 'none'
+				});
+			});
+			// 初始化单页view
+			var viewApi = mui('#app').view({
+				defaultPage: '#setting'
+			});
+			//初始化单页的区域滚动
+			mui('.mui-scroll-wrapper').scroll();
+			var view = viewApi.view;
+			var state = {};
+			var user = {};
+			var userGroup = {};
+			// 在该方法内添加页面第一次被打开时需要执行的方法
+			app.initPage = function() {
+				state = app.getState() || {};
+				user = state.user || {};
+				userGroup = state.userGroup || {};
+				document.getElementById('userInfo_userNameId').innerHTML = user.userName;
+				document.getElementById('userInfo_userNameNick').innerHTML = user.loginName;
+				document.getElementById('userInfo_userTypeId').innerHTML = userGroup.name;
+				document.getElementById('userInfo_userIcon').src = app.conf.host + "/api/avatar/" + user.userId + ".png";
+				//处理view的后退与webview后退
+				var oldBack = mui.back;
+				mui.back = function() {
+					if (viewApi.canBack()) { //如果view可以后退，则执行view的后退
+						viewApi.back();
+					} else { //执行webview后退
+						oldBack();
+					}
+				};
+				//通过view元素监听所有页面切换事件，目前提供pageBeforeShow|pageShow|pageBeforeBack|pageBack四种事件(before事件为动画开始前触发)
+				//第一个参数为事件名称，第二个参数为事件回调，其中e.detail.page为当前页面的html对象
+				view.addEventListener('pageShow', function(e) {
+					var page = e.detail.page;
+					var pageId = page.id;
+					var hashParams = page.hashParams;
+					setTimeout(function() {
+						if (pageId == "recommendToDo") {
+							loadTODO();
+						} else if (pageId == "recommendDone") {
+							loadDone();
+						} else if (pageId == "phonebook") {
+							loadPhonebook();
+						} else if (pageId == "recommendDetail") {
+							loadRecommendInfo(hashParams[1]);
+						}
+					}, 0);
+				});
+			};
+			// 加载报备待办信息
+			function loadTODO() {
+				var userGroupType = userGroup.type;
+				var recommendToDoTable = document.getElementById('recommendToDoTable');
+				//先删除表格中所有行
+				if (userGroupType) {
+					//recommendToDoTable.innerHTML = '<li class="mui-table-view-cell">正在加载数据，请稍候...</li>';
+					//加载报备数据（经纪人）
+					if ("salesman" == userGroupType) {
+						var waiting = null;
+						if (recommendToDoTable.innerHTML.length < 100) {
+							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+						}
+						app.waitingPresent(function(data) {
+							if (waiting && waiting.close) {
+								waiting.close();
+							}
+							var html = [];
+							for (temp in data) {
+								var recommend = data[temp];
+								html.push('<li class="mui-table-view-cell">');
+								html.push('<div class="mui-table">');
+								html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
+								html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
+								html.push('</div>');
+								html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
+								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
+								html.push('</div>');
+								html.push('</div>');
+								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.customerPresent(\'', recommend.recommendId, '\' ,app.customerPresentCallback)">到场</button>');
+								html.push('</li>');
+							}
+							if (html.length > 10) {
+								recommendToDoTable.innerHTML = html.join('');
+							} else {
+								recommendToDoTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
+							}
+						});
+					} else if ("commissioner" == userGroupType) {
+						var waiting = null;
+						if (recommendToDoTable.innerHTML.length < 100) {
+							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+						}
+						app.waitingConfirm(function(data) {
+							if (waiting && waiting.close) {
+								waiting.close();
+							}
+							var html = [];
+							for (temp in data) {
+								flag = true;
+								var recommend = data[temp];
+								html.push('<li class="mui-table-view-cell">');
+								html.push('<div class="mui-table">');
+								html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
+								html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
+								html.push('</div>');
+								html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
+								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
+								html.push('</div>');
+								html.push('</div>');
+								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.recommendConfirm(\'', recommend.recommendId, '\' ,app.recommendConfirmCallback)">确认报备</button>');
+								html.push('</li>');
+							}
+							if (html.length > 10) {
+								recommendToDoTable.innerHTML = html.join('');
+							} else {
+								recommendToDoTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
+							}
+						});
+					}
+				} else {
+					//用户组为空，到服务器获取一次
+					recommendToDoTable.innerHTML = '<li class="mui-table-view-cell">未能获得用户权限，请重新登录</li>';
+				}
+			}
+			//已经处理过程的报备信息列表
+			function loadDone() {
+				var userGroupType = userGroup.type;
+				var recommendDoneTable = document.getElementById('recommendDoneTable');
+				//先删除表格中所有行
+				//recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">正在加载数据，请稍候...</li>';
+				if (userGroupType) {
+					var waiting = null;
+					if (recommendDoneTable.innerHTML.length < 100) {
+						waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+					}
+					//加载报备数据（经纪人）
+					app.getMyPresent(function(data) {
+						if (waiting && waiting.close) {
+							waiting.close();
+						}
+						var html = [];
+						for (temp in data) {
+							var recommend = data[temp];
+							html.push('<li class="mui-table-view-cell">');
+							html.push('<div class="mui-table">');
+							html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
+							html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
+							html.push('</div>');
+							html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
+							html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
+							html.push('</div>');
+							html.push('</div>');
+							html.push('<span class="mui-badge mui-badge-success">', app.getRecommendStatusName(recommend.status), '</span>');
+							html.push('</li>');
+						}
+						if (html.length > 10) {
+							recommendDoneTable.innerHTML = html.join('');
+						} else {
+							recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
+						}
+					});
+				} else {
+					//用户组为空，到服务器获取一次
+					recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">未能获得用户权限，请重新登录</li>';
+				}
+			}
+			// 推荐详情
+			function loadRecommendInfo(recommendId) {
+				var recommendInfo = document.getElementById('recommendInfo');
+				app.getRecommendDetail(recommendId, function(data) {
+					if (data.success) {
+						var html = template('tmpl_recommendInfo', data.result);
+						recommendInfo.innerHTML = html;
+					} else {
+						recommendInfo.innerHTML = data.message;
+					}
+				});
+			}
+			// 通讯录信息列表
+			function loadPhonebook() {
+				var phonebookList = document.getElementById('phonebookList');
+				var waiting = null;
+				if (phonebookList.innerHTML.length < 100) {
+					waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+				}
+				app.getMyPhonebook(function(data) {
+					if (waiting && waiting.close) {
+						waiting.close();
+					}
+					var html = template('tmpl_phonebook', data);
+					phonebookList.innerHTML = html;
+				});
+			}
+			//加载报备确认数据（报备专员）
+			//退出操作******************
+			document.getElementById('exit').addEventListener('tap', function() {
+				if (mui.os.ios) {
+					app.setState({});
+					mui.openWindow({
+						url: 'login.html',
+						id: 'login',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+					return;
+				}
+				var btnArray = [{
+					title: "注销当前账号"
+				}, {
+					title: "直接关闭应用"
+				}];
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: btnArray
+				}, function(event) {
+					var index = event.index;
+					switch (index) {
+						case 1:
+							app.setState({});
+							//获得主页面的webview
+							var main = plus.webview.getWebviewById("main")
+								//触发主页面的gohome事件
+							mui.fire(main, 'logout');
+							break;
+						case 2:
+							plus.runtime.quit();
+							break;
+					}
+				});
+			}, false);
+		}(mui, document));
+	</script>
+
+</html>

@@ -1,0 +1,48 @@
+html,
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+.mui-input-group {
+	margin-top: 10px;
+}
+
+.mui-input-group:first-child {
+	margin-top: 20px;
+}
+
+.mui-input-group label {
+	width: 24%;
+}
+
+.mui-input-row label~input,
+.mui-input-row label~select,
+.mui-input-row label~textarea {
+	width: 76%;
+}
+
+.mui-content-padded {
+	margin-top: 25px;
+}
+
+.mui-btn {
+	padding: 10px;
+}
+
+.link-area {
+	display: block;
+	margin-top: 25px;
+	text-align: center;
+}
+
+.spliter {
+	color: #bbb;
+	padding: 0px 8px;
+}
+
+.mui-input-row label~input,
+.mui-input-row label~select,
+.mui-input-row label~textarea {
+	margin-top: 1px;
+}

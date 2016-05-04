@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>房产咨询</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+	</head>
+
+	<body>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<img src="../images/u26.png" style="width: 100%;padding: 5px;" />
+				<ul id="myList" class="mui-table-view">
+
+				</ul>
+			</div>
+		</div>
+	</body>
+
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script src="../js/app.template.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function(mui, doc) {
+			//mui初始化
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupLoad
+					}
+				}
+			});
+			mui.plusReady(function() {
+				plus.webview.currentWebview().setStyle({
+					scrollIndicator: 'none'
+				});
+				app.initTemplates();
+			});
+			// 在刚方法内添加页面第一次被打开时需要执行的方法
+			app.initPage = function() {
+				setTimeout(function() {
+					// 触发下拉加载时间
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				}, 0);
+			};
+			var myListBox = document.getElementById('myList');
+			var count = 0;
+
+			function pulldownRefresh() {
+				count = 1;
+				mui('#pullrefresh').pullRefresh().refresh(true);
+				// 初始化数据
+				mui.ajax(app.conf.infoListUrl, {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (data) {
+							var success = data.success;
+							if (success) {
+								// 清空原有数据
+								myListBox.innerHTML = "";
+								var rows = data.result || data.rows;
+								renderChild(rows);
+							}
+						}
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					}
+				});
+			}
+
+			function pullupLoad() {
+				// 初始化数据
+				mui.ajax(app.conf.infoListUrl, {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (data) {
+							var success = data.success;
+							if (success) {
+								var rows = data.result || data.rows;
+								renderChild(rows);
+							}
+						}
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					}
+				});
+			}
+
+			function renderChild(rows) {
+				if (rows && rows.length > 0) {
+					for (var i = 0; i < rows.length; i++) {
+						var item = rows[i];
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell mui-media';
+						li.id = item.id;
+						var inner = ['<a href="information-detail.html?id=', item.id, '">'];
+						inner.push('<img class="mui-media-object mui-pull-left" src="', app.conf.host, '/', item.filePath, '">');
+						inner.push('<div class="mui-media-body">', item.tile);
+						inner.push('<p class = "mui-ellipsis"> 【新闻】', item.pubTime.substr(0, 10));
+						inner.push('<i class="mui-icon mui-icon-star"></i>', item.viewTimes);
+						inner.push('</p></div></a>');
+						li.innerHTML = inner.join('');
+						myListBox.appendChild(li)
+					}
+				}
+			}
+			//主列表点击事件
+			mui('#myList').on('tap', 'a', function() {
+				var conf = {};
+				conf.id = this.getAttribute('href');
+				conf.href = this.href;
+				//判断是否显示右上角menu图标；
+				conf.showMenu = false;
+				conf.title = this.innerText.trim();
+				app.toDatail(conf);
+			});
+		}(mui, document));
+	</script>
+
+</html>

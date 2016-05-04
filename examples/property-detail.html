@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>楼盘详情</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style type="text/css">
+			.pis-bar {
+				position: fixed;
+				z-index: 10;
+				right: 0;
+				left: 0;
+				height: 44px;
+				padding: 6px;
+				padding-right: 10px;
+				padding-left: 10px;
+				border-bottom: 0;
+				background-color: #f7f7f7;
+				-webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .85);
+				box-shadow: 0 0 1px rgba(0, 0, 0, .85);
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+			}
+			
+			.table-label {
+				text-align: left;
+				vertical-align: top;
+				width: 85px;
+			}
+			
+			.mui-segmented-control .mui-control-item {
+				line-height: 50px;
+				width: 100%;
+			}
+			
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				background-color: #fff;
+			}
+			
+			#segmentedControlContents {
+				padding: 0 5px 5px 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<footer class="pis-bar mui-bar-footer" style="text-align: center;">
+			<div class="mui-row">
+				<div class="mui-col-xs-6">
+					<a type="button" class="mui-btn mui-btn-primary" href="tel:123456789">
+						<span class="mui-icon mui-icon-phone"></span>案场电话
+					</a>
+				</div>
+				<div class="mui-col-xs-6">
+					<button type="button" id="goRecommend" class="mui-btn mui-btn-danger">
+						<span class="mui-icon mui-icon-compose"></span>立刻推荐
+					</button>
+				</div>
+			</div>
+		</footer>
+		<div class="mui-content" style="background-color: #FFFFFF;">
+			<img src="../images/cbd.jpg" style="width: 100%;padding: 5px;" />
+
+			<div class="mui-row">
+				<div class="mui-col-xs-9" style="padding-left: 5px;">
+					<div style="padding-top: 6px;"><strong class="mui-h3">亚东观云国际</strong>【雨花区】</div>
+					<div style="padding-top: 10px;">均价：14000元/平</div>
+					<div>佣金：18000-30000</div>
+				</div>
+				<div class="mui-col-xs-3">
+					<div class="am-text-lg">已推荐</div>
+					<div>2341</div>
+					<div class="am-text-lg">已预约</div>
+					<div>1871</div>
+				</div>
+			</div>
+			<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted" />
+			<div class="mui-row">
+				<div id="segmentedControlContents" class="mui-col-xs-9">
+					<div id="content1" class="mui-control-content mui-active">
+						<table>
+							<tr>
+								<td class="table-label">首期开盘：</td>
+								<td>2015-05</td>
+							</tr>
+							<tr>
+								<td class="table-label">楼盘特色：</td>
+								<td>亚东经典楼盘、靠近市区</td>
+							</tr>
+							<tr>
+								<td class="table-label">装修类型：</td>
+								<td>毛坯</td>
+							</tr>
+							<tr>
+								<td class="table-label">占地面积：</td>
+								<td>约9万平方米</td>
+							</tr>
+							<tr>
+								<td class="table-label">产权：</td>
+								<td>70年</td>
+							</tr>
+							<tr>
+								<td class="table-label">绿化率：</td>
+								<td>25%</td>
+							</tr>
+							<tr>
+								<td class="table-label">物业公司：</td>
+								<td>莲花物业</td>
+							</tr>
+							<tr>
+								<td class="table-label">交付时间：</td>
+								<td>2015-10</td>
+							</tr>
+						</table>
+					</div>
+					<div id="content2" class="mui-control-content">
+						<table>
+							<tr>
+								<td class="table-label">公交线路：</td>
+								<td>805、15、35路在牛首山站下</td>
+							</tr>
+							<tr>
+								<td class="table-label">地铁线路：</td>
+								<td>地铁一号线 牛首山站下</td>
+							</tr>
+							<tr>
+								<td class="table-label">开车自驾：</td>
+								<td>绕城高速在牛首山出口下即可、宁溧路与丹阳路交叉口</td>
+							</tr>
+						</table>
+					</div>
+					<div id="content3" class="mui-control-content">
+						<table>
+							<tr>
+								<td class="table-label">4室2厅2卫 160平方</td>
+								<td><img width="200" height="200" src="http://images2.jiwu.com/housepic1/40/18206/245399_m.jpg"></img>
+								</td>
+							</tr>
+							<tr>
+								<td class="table-label">3室2厅1卫 120平方</td>
+								<td><img width="200" height="200" src="http://imgs.jiwu.com/attachment/housepic/2011/06/26/757489_m.jpg"></img>
+								</td>
+							</tr>
+							<tr>
+								<td class="table-label">2室2厅1卫 95平方</td>
+								<td><img width="200" height="200" src="http://imgs.jiwu.com/attachment/housepic/2011/06/26/757484_m.jpg"></img>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="mui-col-xs-3" style="border-left: 1px solid #c8c7cc;">
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+						<a class="mui-control-item mui-active" href="#content1">楼盘介绍</a>
+						<a class="mui-control-item" href="#content2">交通配套</a>
+						<a class="mui-control-item" href="#content3">户型介绍</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			(function(mui, doc) {
+				var ws = null;
+				// 动画窗口
+				function animateWindow() {
+					wp.show('slide-in-bottom');
+					wp.evalJS('app.exceptFirst()');
+				}
+				//mui初始化
+				mui.init();
+				mui.plusReady(function() {
+					plus.webview.currentWebview().setStyle({
+						scrollIndicator: 'none'
+					});
+					// 预加载推荐页面
+					wp = mui.preload({
+						url: 'tab-recommend.html',
+						id: 'recommend',
+						styles: {
+							scrollIndicator: 'none',
+							scalable: false,
+							popGesture: 'none'
+						},
+						extras: {
+							mType: 'pop'
+						}
+					});
+				});
+				document.getElementById("goRecommend").addEventListener('tap', function(e) {
+					e.stopPropagation();
+					animateWindow();
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

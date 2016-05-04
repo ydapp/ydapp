@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>客户推荐</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style type="text/css">
+			.mui-input-group {
+				margin-top: 10px;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">客户推荐</h1>
+		</header>
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>客户姓名</label>
+					<input id='customerName' name="customerName" type="text" class="mui-input-clear" placeholder="客户姓名">
+
+				</div>
+				<div class="mui-input-row">
+					<label>联系电话</label>
+					<input id='TEL' name='TEL' type="tel" class="mui-input-clear" placeholder="联系电话">
+				</div>
+				<div class="mui-input-row">
+					<label>意向城市</label>
+					<select id='city' name='city' type="text" class="mui-input" placeholder="意向城市">
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>意向楼盘</label>
+					<select id='houses' name='houses' type="text" class="mui-input" placeholder="意向楼盘"></select>
+				</div>
+				<div class="mui-input-row">
+					<label>看房日期</label>
+					<input id='appointedTime' name='appointedTime' type="text" class="mui-input-clear" placeholder="看房日期">
+				</div>
+				<div class="mui-input-row">
+					<label>推荐人</label>
+					<input readonly="true" id='referee' name='referee' type="text" class="mui-input" readonly="readonly">
+				</div>
+				<div class="mui-input-row" style="height: auto;">
+					<label>备注</label>
+					<textarea id='remark' name='remark' rows="3" class="mui-input" placeholder="备注"></textarea>
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='submitBtn' class="mui-btn mui-btn-block mui-btn-primary">立刻推荐</button>
+			</div>
+		</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		(function($, doc) {
+			//mui初始化
+			$.init();
+			$.plusReady(function() {
+				var ws = plus.webview.currentWebview();
+				var backElem = document.getElementById("back");
+				backElem.style.display = "none";
+				if (ws.mType == 'pop') {
+					$.back = function() {
+						// 返回时将当前窗口隐藏以备后续继续使用
+						ws.hide('auto');
+					};
+					app.initPage();
+				}
+			});
+			// 处理页面
+			var loginForm = doc.getElementById("login-form");
+			var refereeBox = doc.getElementById('referee');
+			var submitBtn = doc.getElementById("submitBtn");
+			var customerNameBox = doc.getElementById('customerName');
+			var TELBox = doc.getElementById('TEL');
+			var cityBox = doc.getElementById('city');
+			var housesBox = doc.getElementById('houses');
+			var remarkBox = doc.getElementById('remark');
+			var submitButton = doc.getElementById("submitBtn");
+			var state = {};
+			var user = {};
+			app.initPage = function() {
+				state = app.getState() || {};
+				user = state.user || {};
+				//初始化推荐人
+				refereeBox.value = user.userName + "(" + user.loginName + ")";
+				var userGroup = state.userGroup || {};
+				var userGroupType = userGroup.type;
+				if ("salesman" == userGroupType) {
+					submitBtn.innerHTML = "立刻推荐";
+					submitBtn.className = "mui-btn mui-btn-block mui-btn-primary";
+					submitBtn.disabled = false;
+					// 在刚方法内添加页面第一次被打开时需要执行的方法
+					app.exceptFirst = initForm;
+				} else {
+					submitBtn.innerHTML = "不是经纪人不能推荐";
+					submitBtn.className = "mui-btn mui-btn-block";
+					submitBtn.disabled = "disabled";
+					return;
+				}
+				var appointedTimeBox = doc.getElementById("appointedTime");
+				appointedTimeBox.addEventListener('tap', function() {
+					var dDate = new Date();
+					var minDate = new Date();
+					var maxDate = new Date();
+					maxDate.setFullYear(dDate.getFullYear() + 2, 11, 31);
+					plus.nativeUI.pickDate(function(e) {
+						var d = e.date;
+						appointedTimeBox.value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					}, function(e) {}, {
+						title: "请选择日期",
+						date: dDate,
+						minDate: minDate,
+						maxDate: maxDate
+					});
+				});
+				cityBox.addEventListener('change', function() {
+					var waiting = plus.nativeUI.showWaiting("数据加载中...");
+					var cityId = cityBox.value;
+					mui.ajax(app.conf.host + "/api/buildings/cityId/" + cityId + ".json", {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data, textStatus, xhr) {
+							waiting.close();
+							//服务器返回响应，根据响应结果，分析是否登录成功；
+							if (data) {
+								var success = data.success;
+								if (success) {
+									var rows = data.result || data.rows;
+									if (rows && rows.length > 0) {
+										var tmp = ['<option value="0">请选择...</option>'];
+										for (var i = 0; i < rows.length; i++) {
+											var item = rows[i];
+											tmp.push('<option value="', item.buildingId, '">', item.buildingName, '</option>')
+										}
+										housesBox.innerHTML = tmp.join('');
+									}
+								}
+							}
+						}
+					});
+				});
+				// 添加提交按钮时间
+				submitButton.addEventListener('tap', function(event) {
+					var customerInfo = {
+						customerName: customerNameBox.value,
+						customerTel: TELBox.value,
+						cityId: cityBox.value,
+						buildingId: housesBox.value,
+						appointmentLookHouseDate: appointedTimeBox.value,
+						refreeId: user.userId,
+						remark: remarkBox.innerHTML
+					};
+					app.recommend(customerInfo, function(err) {
+						if (err === true) {
+							mui.alert('您添加的客户信息系统中已经存在', '对不起 !', function() {});
+							return;
+						}
+						if (err) {
+							plus.nativeUI.toast(err);
+							return;
+						}
+					});
+				});
+				initForm();
+			};
+			var initForm = function() {
+				loginForm.reset();
+				//初始化推荐人
+				refereeBox.value = user.userName + "(" + user.loginName + ")";
+				// 添加城市数据初始化
+				mui.ajax(app.conf.host + "/api/getCitys/null.json", {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (data) {
+							var success = data.success;
+							if (success) {
+								var rows = data.result || data.rows;
+								if (rows && rows.length > 0) {
+									var tmp = ['<option value="0">请选择...</option>'];
+									for (var i = 0; i < rows.length; i++) {
+										var item = rows[i];
+										tmp.push('<option value="', item.cityId, '">', item.cityName, '</option>')
+									}
+									cityBox.innerHTML = tmp.join('');
+								}
+							}
+						}
+					}
+				});
+			};
+		}(mui, document));
+	</script>
+
+</html>
