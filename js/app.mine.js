@@ -312,9 +312,10 @@
 		var state = app.getState() || {};
 		var user = state.user || {};
 		var userId = user.userId;
-		mui.ajax(host + '/api/recommends/presented/' + userId + '.json', {
+		mui.ajax(host + '/api/userInfos.json', {
 			dataType: 'json', //服务器返回json格式数据
 			type: 'get', //HTTP请求类型
+			data:{page:1,rows:100},
 			timeout: 30000, //超时时间设置为10秒；
 			success: function(data, textStatus, xhr) {
 				data = data || {};

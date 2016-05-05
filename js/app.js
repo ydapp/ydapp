@@ -151,7 +151,7 @@
 				if (data) {
 					var authed = data.success;
 					if (authed) {
-						//用户验证成功，记录下用户名称、用户id、用户类型（管理员、报备专员、经纪公司、业务员）
+						//用户验证成功，记录下用户名称、用户id、用户类型（管理员、驻场专员、经纪公司、业务员）
 						return owner.createState(data.result, callback);
 					} else {
 						return callback(data.message || '用户名或密码错误');

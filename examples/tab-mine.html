@@ -201,15 +201,15 @@
     	描述：通讯录模版
     -->
 	<script id="tmpl_phonebook" type="text/html">
-		{{if success}} {{each result}}
+		{{if success}} {{each rows}}
 		<li class="mui-table-view-cell mui-media">
 			<a href="javascript:;">
 				<img class="mui-media-object mui-pull-left" src="../images/usercard.png">
 				<div class="mui-media-body">
-					{{$value.customerName}}<span class="mui-h5">【{{$value.buildingName}}】</span>
-					<p class='mui-ellipsis'>{{$value.customerTel}}</p>
+					{{$value.nick}}<span class="mui-h5">{{$value.tel}}</span>
+					<p class='mui-ellipsis'>{{$value.groupTypeTitle}}【{{$value.brokingFirm}}{{$value.building}}】</p>
 				</div>
-				<a href="tel:{{$value.customerTel}}" class="mui-btn mui-icon mui-icon-phone" style="font-size: 28px;color: blue;font-weight: bolder;"></a>
+				<a href="tel:{{$value.tel}}" class="mui-btn mui-icon mui-icon-phone" style="font-size: 28px;color: blue;font-weight: bolder;"></a>
 			</a>
 		</li>
 		{{/each}} {{else}}
@@ -309,11 +309,14 @@
 			var state = {};
 			var user = {};
 			var userGroup = {};
+			var userModel = {};
 			// 在该方法内添加页面第一次被打开时需要执行的方法
 			app.initPage = function() {
 				state = app.getState() || {};
 				user = state.user || {};
 				userGroup = state.userGroup || {};
+				userModel = state.userModel || {};
+				console.log("userModel:" + userModel);
 				document.getElementById('userInfo_userNameId').innerHTML = user.userName;
 				document.getElementById('userInfo_userNameNick').innerHTML = user.loginName;
 				document.getElementById('userInfo_userTypeId').innerHTML = userGroup.name;
@@ -486,6 +489,14 @@
 					if (waiting && waiting.close) {
 						waiting.close();
 					}
+					console.log("通讯录:" + data);
+					for (o in data){
+						console.log("属性:" + o + ":" + data[o]);
+					}
+					console.log("total:" + data.total);
+					console.log("rows:" + data.rows);
+					console.log("rows.length:" + data.rows.length);
+					console.log("tel:" + data.rows[0].tel);
 					var html = template('tmpl_phonebook', data);
 					phonebookList.innerHTML = html;
 				});
