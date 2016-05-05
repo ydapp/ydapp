@@ -119,7 +119,10 @@
 					submitBtn.disabled = "disabled";
 					return;
 				}
+				/*
+				 * 注释掉看房日期
 				var appointedTimeBox = doc.getElementById("appointedTime");
+				
 				appointedTimeBox.addEventListener('tap', function() {
 					var dDate = new Date();
 					var minDate = new Date();
@@ -135,6 +138,7 @@
 						maxDate: maxDate
 					});
 				});
+				*/
 				cityBox.addEventListener('change', function() {
 					var waiting = plus.nativeUI.showWaiting("数据加载中...");
 					var cityId = cityBox.value;

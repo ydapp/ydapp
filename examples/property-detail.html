@@ -51,9 +51,14 @@
 		<footer class="pis-bar mui-bar-footer" style="text-align: center;">
 			<div class="mui-row">
 				<div class="mui-col-xs-6">
-					<a type="button" class="mui-btn mui-btn-primary" href="tel:123456789">
+					<a type="button" id="id_propertyTel" class="mui-btn mui-btn-primary" href="tel:123456789">
 						<span class="mui-icon mui-icon-phone"></span>案场电话
 					</a>
+				</div>
+				<div class="mui-col-xs-6">
+					<button type="button" id="goSubscriptionRules" class="mui-btn mui-btn-danger">
+						<span class="mui-icon mui-icon-compose"></span>认购规则
+					</button>
 				</div>
 				<div class="mui-col-xs-6">
 					<button type="button" id="goRecommend" class="mui-btn mui-btn-danger">
@@ -63,12 +68,12 @@
 			</div>
 		</footer>
 		<div class="mui-content" style="background-color: #FFFFFF;">
-			<img src="../images/cbd.jpg" style="width: 100%;padding: 5px;" />
+			<img id="id_filePath" src="../images/cbd.jpg" style="width: 100%;padding: 5px;" />
 
 			<div class="mui-row">
 				<div class="mui-col-xs-9" style="padding-left: 5px;">
-					<div style="padding-top: 6px;"><strong class="mui-h3">亚东观云国际</strong>【雨花区】</div>
-					<div style="padding-top: 10px;">均价：14000元/平</div>
+					<div style="padding-top: 6px;"><strong class="mui-h3" id="id_propertyName">亚东观云国际</strong>【<span id="buildingArea">雨花区</span>】</div>
+					<div style="padding-top: 10px;">均价：<span ="id_avgPrice"></span>14000元/平</div>
 					<div>佣金：18000-30000</div>
 				</div>
 				<div class="mui-col-xs-3">
@@ -163,6 +168,7 @@
 			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			(function(mui, doc) {
 				var ws = null;
@@ -194,6 +200,48 @@
 				document.getElementById("goRecommend").addEventListener('tap', function(e) {
 					e.stopPropagation();
 					animateWindow();
+				});
+				// 获得请求页面时携带的参数
+				var params = {};
+				(function() {
+					var qs = location.search.substring(1, location.search.length);
+					if (qs.length == 0) {
+						return;
+					}
+					qs = qs.replace(/\+/g, ' ');
+					var args = qs.split('&');
+					for (var i = 0; i < args.length; i++) {
+						var pair = args[i].split('=');
+						var name = decodeURIComponent(pair[0]);
+						var value = (pair.length == 2) ? decodeURIComponent(pair[1]) : name;
+						console.log("name:" + name + " value:" + value);
+						params[name] = value;
+					}
+				})();
+				// 获得页面宽度
+				params.viewWidth = document.body.clientWidth;
+				mui.ajax(app.conf.host + "/api/property/" + params.index + ".json", {
+					data: params,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log("data:" + data);
+						console.log("data.building:" + data.building);
+						var building = data.building;
+						console.log("楼盘名称:" + building.propertyName);
+						if (building) {
+							document.getElementById("id_propertyName").innerHTML = building.propertyName;
+						}
+					},
+					error:function(xhr, type, errorThrown){
+						console.log("发生错误:" + type);
+						console.log("errorThrown:" + errorThrown);
+						console.log("xhr");
+						console.log("responseText:" + xhr.responseText);
+						
+					}
 				});
 			}(mui, document));
 		</script>
