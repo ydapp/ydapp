@@ -50,18 +50,18 @@
 	<body>
 		<footer class="pis-bar mui-bar-footer" style="text-align: center;">
 			<div class="mui-row">
-				<div class="mui-col-xs-6">
+				<div class="mui-col-xs-4">
 					<a type="button" id="id_propertyTel" class="mui-btn mui-btn-primary" href="tel:123456789">
 						<span class="mui-icon mui-icon-phone"></span>案场电话
 					</a>
 				</div>
-				<div class="mui-col-xs-6">
-					<button type="button" id="goSubscriptionRules" class="mui-btn mui-btn-danger">
+				<div class="mui-col-xs-4">
+					<button type="button" id="goSubscriptionRules" class="mui-btn mui-btn-danger" title="">
 						<span class="mui-icon mui-icon-compose"></span>认购规则
 					</button>
 				</div>
-				<div class="mui-col-xs-6">
-					<button type="button" id="goRecommend" class="mui-btn mui-btn-danger">
+				<div class="mui-col-xs-4">
+					<button type="button" id="goRecommend" class="mui-btn mui-btn-primary">
 						<span class="mui-icon mui-icon-compose"></span>立刻推荐
 					</button>
 				</div>
@@ -170,10 +170,25 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script type="text/javascript" charset="utf-8">
+			
 			(function(mui, doc) {
+				//推荐页面
+		    	var wp = null;
+		    	//楼盘数据对象;
+		    	var building = null;
 				var ws = null;
 				// 动画窗口
 				function animateWindow() {
+					console.log("打开推荐窗口之前初始化楼盘数据");
+					try {
+						console.log("调用初始化building方法");
+						console.log("wp:" + wp);
+						console.log("building:" + building);
+						mui.fire(wp,'initBuilding',building);
+					} catch (e){
+						console.error("发生错误", e);
+						alert(e);
+					}
 					wp.show('slide-in-bottom');
 					wp.evalJS('app.exceptFirst()');
 				}
@@ -200,6 +215,9 @@
 				document.getElementById("goRecommend").addEventListener('tap', function(e) {
 					e.stopPropagation();
 					animateWindow();
+				});
+				document.getElementById("goSubscriptionRules").addEventListener('tap', function(e) {
+					alert(this.title);
 				});
 				// 获得请求页面时携带的参数
 				var params = {};
@@ -229,11 +247,14 @@
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						console.log("data:" + data);
 						console.log("data.building:" + data.building);
-						var building = data.building;
+						building = data.building;
 						console.log("楼盘名称:" + building.propertyName);
 						if (building) {
+							document.getElementById("goSubscriptionRules").title=building.subscriptionRules;
+							document.getElementById("id_propertyTel").href="tel:" + building.propertyTel;
 							document.getElementById("id_propertyName").innerHTML = building.propertyName;
 						}
+						
 					},
 					error:function(xhr, type, errorThrown){
 						console.log("发生错误:" + type);

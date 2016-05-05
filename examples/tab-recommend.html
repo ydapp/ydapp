@@ -190,6 +190,15 @@
 				});
 				initForm();
 			};
+			/**
+			 * 初始化楼盘信息，外部调用
+			 */
+			var initBuilding = function(building){
+				console.log("initBuiding被调用2:");
+//				var optionString = '<option value="' + building.propertyId + '">' + building.propertyName + '</option>';
+//				alert(optionString);
+				//housesBox.innerHTML = optionString;
+			};
 			var initForm = function() {
 				loginForm.reset();
 				//初始化推荐人
