@@ -249,6 +249,8 @@
 						console.log("data.building:" + data.building);
 						building = data.building;
 						console.log("楼盘名称:" + building.propertyName);
+						console.log("city:" + building.city);
+						console.log("cityTitle:" + building.cityTitle);
 						if (building) {
 							document.getElementById("goSubscriptionRules").title=building.subscriptionRules;
 							document.getElementById("id_propertyTel").href="tel:" + building.propertyTel;

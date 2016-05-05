@@ -195,9 +195,12 @@
 		if (!customerInfo.buildingId) {
 			return callback('推荐楼盘不能空');
 		}
-		if (customerInfo.appointmentLookHouseDate == null) {
-			return callback('预约看房日期不能为空');
+		if (!customerInfo.remark) {
+			return callback('详情不能为空');
 		}
+//		if (customerInfo.appointmentLookHouseDate == null) {
+//			return callback('预约看房日期不能为空');
+//		}
 		var waiting = plus.nativeUI.showWaiting("处理中，请等待...");
 		mui.ajax(conf.recommendUrl, {
 			contentType: "application/json;charset=utf-8",

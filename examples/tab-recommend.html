@@ -168,14 +168,15 @@
 				});
 				// 添加提交按钮时间
 				submitButton.addEventListener('tap', function(event) {
+					console.log("remark:" + remarkBox.value);
 					var customerInfo = {
 						customerName: customerNameBox.value,
 						customerTel: TELBox.value,
 						cityId: cityBox.value,
 						buildingId: housesBox.value,
-						appointmentLookHouseDate: appointedTimeBox.value,
+						//appointmentLookHouseDate: appointedTimeBox.value,
 						refreeId: user.userId,
-						remark: remarkBox.innerHTML
+						remark: remarkBox.value
 					};
 					app.recommend(customerInfo, function(err) {
 						if (err === true) {
@@ -190,26 +191,47 @@
 				});
 				initForm();
 			};
+			//楼盘是不是已经加载
+			var buildingOK = false;
 			/**
 			 * 初始化楼盘信息，外部调用
 			 */
-			var initBuilding = function(building){
-				console.log("initBuiding被调用2:");
-//				var optionString = '<option value="' + building.propertyId + '">' + building.propertyName + '</option>';
-//				alert(optionString);
-				//housesBox.innerHTML = optionString;
-			};
+			window.addEventListener('initBuilding',function(event){
+				
+				var buildObj = event.detail;
+				console.log("initBuiding被调用,参数building:" + buildObj);
+				console.log("building.propertyId:" + buildObj.propertyId);
+				console.log("building.propertyName:" + buildObj.propertyName);
+				console.log("building.city:" + buildObj.city);
+				console.log("building.cityTitle:" + buildObj.cityTitle);
+				if (buildObj){
+					buildingOK = true;
+					console.log("添加城市数据");
+					var cityOptionString = '<option value="' + buildObj.city + '">' + buildObj.cityTitle + '</option>';
+					console.log("city:" + cityOptionString);
+					cityBox.innerHTML = cityOptionString;
+					console.log("添加楼盘数据")
+					var buildingOptionString = '<option value="' + buildObj.propertyId + '">' + buildObj.propertyName + '</option>';
+					housesBox.innerHTML = buildingOptionString;
+				}
+			}, false);
 			var initForm = function() {
 				loginForm.reset();
 				//初始化推荐人
 				refereeBox.value = user.userName + "(" + user.loginName + ")";
 				// 添加城市数据初始化
+				if (buildingOK){
+					return;
+				}
 				mui.ajax(app.conf.host + "/api/getCitys/null.json", {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(data, textStatus, xhr) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (buildingOK){
+							return;
+						}
 						if (data) {
 							var success = data.success;
 							if (success) {
@@ -219,6 +241,9 @@
 									for (var i = 0; i < rows.length; i++) {
 										var item = rows[i];
 										tmp.push('<option value="', item.cityId, '">', item.cityName, '</option>')
+									}
+									if (buildingOK){
+										return;
 									}
 									cityBox.innerHTML = tmp.join('');
 								}
