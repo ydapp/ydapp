@@ -316,7 +316,6 @@
 				user = state.user || {};
 				userGroup = state.userGroup || {};
 				userModel = state.userModel || {};
-				console.log("userModel:" + userModel);
 				document.getElementById('userInfo_userNameId').innerHTML = user.userName;
 				document.getElementById('userInfo_userNameNick').innerHTML = user.loginName;
 				document.getElementById('userInfo_userTypeId').innerHTML = userGroup.name;
@@ -489,14 +488,6 @@
 					if (waiting && waiting.close) {
 						waiting.close();
 					}
-					console.log("通讯录:" + data);
-					for (o in data){
-						console.log("属性:" + o + ":" + data[o]);
-					}
-					console.log("total:" + data.total);
-					console.log("rows:" + data.rows);
-					console.log("rows.length:" + data.rows.length);
-					console.log("tel:" + data.rows[0].tel);
 					var html = template('tmpl_phonebook', data);
 					phonebookList.innerHTML = html;
 				});

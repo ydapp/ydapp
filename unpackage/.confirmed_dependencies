@@ -1,250 +1,250 @@
 {
-	"login.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/app.js",
-			"js/mui.enterfocus.js",
-			"fonts/mui.ttf",
-			"css/style.css",
-			"js/app.update.js"
-		],
-		"refer": [
-			"main.html",
-			"forget_password.html",
-			"reg.html"
-		]
-	},
-	"main.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"tab-property-market.html",
-			"fonts/mui.ttf",
-			"examples/tab-property-market.html"
-		],
-		"refer": [
-			"login.html",
-			"tab-setting.html",
-			"tab-recommend.html",
-			"tab-property-market.html",
-			"tab-information.html",
-			"examples/tab-property-market.html",
-			"examples/tab-setting.html",
-			"examples/tab-recommend.html",
-			"examples/tab-information.html",
-			"examples/tab-mine.html"
-		]
-	},
-	"forget_password.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css"
-		]
-	},
-	"reg.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/app.js",
-			"fonts/mui.ttf",
-			"css/style.css",
-			"js/mui.enterfocus.js",
-			"reg.html"
-		],
-		"refer": [
-			"reg.html",
-			"login.html"
-		]
-	},
-	"tab-property-market.html": {
-		"resources": [
-			"images/cbd.jpg",
-			"images/yuantiao.jpg",
-			"images/muwu.jpg",
-			"images/shuijiao.jpg",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/jquery.min.js",
-			"js/amazeui.min.js",
-			"css/amazeui.min.css",
-			"images/u43.png"
-		],
-		"refer": [
-			"property-detail.html"
-		]
-	},
-	"property-detail.html": {
-		"resources": [
-			"css/amazeui.min.css",
-			"js/jquery.min.js",
-			"js/mui.min.js",
-			"js/amazeui.min.js",
-			"images/cbd.jpg",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		]
-	},
-	"tab-information.html": {
-		"resources": [
-			"images/u29.png",
-			"images/u26.png",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": [
-			"information-detail.html"
-		]
-	},
-	"information-detail.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"images/u35.png"
-		]
-	},
-	"tab-recommend.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/app.js"
-		]
-	},
-	"tab-setting.html": {
-		"resources": [
-			"images/u43.png",
-			"css/amazeui.min.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"images/top.png"
-		]
-	},
-	"examples/tab-property-market.html": {
-		"resources": [
-			"images/cbd.jpg",
-			"js/jquery.min.js",
-			"images/u43.png",
-			"images/yuantiao.jpg",
-			"images/muwu.jpg",
-			"images/shuijiao.jpg",
-			"js/amazeui.min.js",
-			"css/amazeui.min.css",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/newsTemplate.js",
-			"js/app.js",
-			"js/template.js",
-			"fonts/mui.ttf",
-			"js/app.template.js"
-		],
-		"refer": [
-			"examples/property-detail.html",
-			"examples/template.html",
-			"examples/information-detail.html"
-		]
-	},
-	"examples/tab-information.html": {
-		"resources": [
-			"images/u26.png",
-			"js/mui.min.js",
-			"images/u29.png",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/app.js",
-			"js/template.js",
-			"examples/information-detail.html",
-			"js/app.template.js"
-		],
-		"refer": [
-			"examples/information-detail.html",
-			"examples/template.html",
-			"examples/property-detail.html"
-		]
-	},
-	"examples/tab-recommend.html": {
-		"resources": [
-			"css/mui.min.css",
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf"
-		]
-	},
-	"examples/tab-setting.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"images/top.png",
-			"js/app.js",
-			"js/app.mine.js",
-			"js/mui.view.js",
-			"css/feedback-page.css",
-			"js/feedback-page.js",
-			"images/iconfont-tianjia.png"
-		],
-		"refer": [
-			"login.html"
-		]
-	},
-	"examples/template.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		]
-	},
-	"examples/property-detail.html": {
-		"resources": [
-			"css/amazeui.min.css",
-			"fonts/mui.ttf",
-			"images/cbd.jpg",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": [
-			"examples/tab-recommend.html",
-			"examples/recommend.html"
-		]
-	},
-	"examples/information-detail.html": {
-		"resources": [
-			"images/u35.png",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/app.js"
-		]
-	},
-	"examples/recommend.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		]
-	},
-	"examples/tab-mine.html": {
-		"resources": [
-			"css/mine.css",
-			"js/app.mine.js",
-			"images/top.png",
-			"css/feedback-page.css",
-			"js/feedback-page.js",
-			"js/mui.view.js",
-			"images/iconfont-tianjia.png",
-			"fonts/mui.ttf",
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"images/user.png",
-			"images/usercard.png",
-			"js/template.js"
-		]
-	}
+  "login.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/app.js",
+      "js/mui.enterfocus.js",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "js/app.update.js"
+    ],
+    "refer": [
+      "main.html",
+      "forget_password.html",
+      "reg.html"
+    ]
+  },
+  "main.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "tab-property-market.html",
+      "fonts/mui.ttf",
+      "examples/tab-property-market.html"
+    ],
+    "refer": [
+      "login.html",
+      "tab-setting.html",
+      "tab-recommend.html",
+      "tab-property-market.html",
+      "tab-information.html",
+      "examples/tab-property-market.html",
+      "examples/tab-setting.html",
+      "examples/tab-recommend.html",
+      "examples/tab-information.html",
+      "examples/tab-mine.html"
+    ]
+  },
+  "forget_password.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css"
+    ]
+  },
+  "reg.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/app.js",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "js/mui.enterfocus.js",
+      "reg.html"
+    ],
+    "refer": [
+      "reg.html",
+      "login.html"
+    ]
+  },
+  "tab-property-market.html": {
+    "resources": [
+      "images/cbd.jpg",
+      "images/yuantiao.jpg",
+      "images/muwu.jpg",
+      "images/shuijiao.jpg",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery.min.js",
+      "js/amazeui.min.js",
+      "css/amazeui.min.css",
+      "images/u43.png"
+    ],
+    "refer": [
+      "property-detail.html"
+    ]
+  },
+  "property-detail.html": {
+    "resources": [
+      "css/amazeui.min.css",
+      "js/jquery.min.js",
+      "js/mui.min.js",
+      "js/amazeui.min.js",
+      "images/cbd.jpg",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "tab-information.html": {
+    "resources": [
+      "images/u29.png",
+      "images/u26.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "information-detail.html"
+    ]
+  },
+  "information-detail.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/u35.png"
+    ]
+  },
+  "tab-recommend.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/app.js"
+    ]
+  },
+  "tab-setting.html": {
+    "resources": [
+      "images/u43.png",
+      "css/amazeui.min.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/top.png"
+    ]
+  },
+  "examples/tab-property-market.html": {
+    "resources": [
+      "images/cbd.jpg",
+      "js/jquery.min.js",
+      "images/u43.png",
+      "images/yuantiao.jpg",
+      "images/muwu.jpg",
+      "images/shuijiao.jpg",
+      "js/amazeui.min.js",
+      "css/amazeui.min.css",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/newsTemplate.js",
+      "js/app.js",
+      "js/template.js",
+      "fonts/mui.ttf",
+      "js/app.template.js"
+    ],
+    "refer": [
+      "examples/property-detail.html",
+      "examples/template.html",
+      "examples/information-detail.html"
+    ]
+  },
+  "examples/tab-information.html": {
+    "resources": [
+      "images/u26.png",
+      "js/mui.min.js",
+      "images/u29.png",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/app.js",
+      "js/template.js",
+      "examples/information-detail.html",
+      "js/app.template.js"
+    ],
+    "refer": [
+      "examples/information-detail.html",
+      "examples/template.html",
+      "examples/property-detail.html"
+    ]
+  },
+  "examples/tab-recommend.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf"
+    ]
+  },
+  "examples/tab-setting.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/top.png",
+      "js/app.js",
+      "js/app.mine.js",
+      "js/mui.view.js",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "images/iconfont-tianjia.png"
+    ],
+    "refer": [
+      "login.html"
+    ]
+  },
+  "examples/template.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "examples/property-detail.html": {
+    "resources": [
+      "css/amazeui.min.css",
+      "fonts/mui.ttf",
+      "images/cbd.jpg",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "examples/tab-recommend.html",
+      "examples/recommend.html"
+    ]
+  },
+  "examples/information-detail.html": {
+    "resources": [
+      "images/u35.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/app.js"
+    ]
+  },
+  "examples/recommend.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "examples/tab-mine.html": {
+    "resources": [
+      "css/mine.css",
+      "js/app.mine.js",
+      "images/top.png",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "js/mui.view.js",
+      "images/iconfont-tianjia.png",
+      "fonts/mui.ttf",
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/user.png",
+      "images/usercard.png",
+      "js/template.js"
+    ]
+  }
 }

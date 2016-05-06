@@ -74,7 +74,7 @@
 	"plus": {
 		"splashscreen": {
 			"autoclose": false,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
-			"waiting": false
+			"waiting": false,"delay":"0"
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
@@ -161,11 +161,11 @@
 					}
 				},
 				"android": {
-					"mdpi": "D:/工作相关/地产APP/240_282.png", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": "D:/工作相关/地产APP/320_442.png", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "D:/工作相关/地产APP/480_760.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "D:/工作相关/地产APP/480_760.png",
-					"xxhdpi":"D:/工作相关/地产APP/480_760.png"
+					"mdpi": "D:/工作相关/地产APP/pics/240.png", /*普通屏启动图片，分辨率：240x282*/
+					"ldpi": "D:/工作相关/地产APP/pics/320.png", /*大屏启动图片，分辨率：320x442*/
+					"hdpi": "D:/工作相关/地产APP/pics/480.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "D:/工作相关/地产APP/pics/720.png",
+					"xxhdpi":"D:/工作相关/地产APP/pics/1080.png"
 				}
 			}
 		}
