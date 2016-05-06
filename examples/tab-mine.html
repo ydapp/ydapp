@@ -349,10 +349,25 @@
 					}, 0);
 				});
 			};
+			var getConfirmStatusName = function(currentStatus){
+				switch (currentStatus) {
+					case 'present':
+						return "筹";
+					case 'pledges':
+						return "订";
+					case 'order':
+						return "购";
+					case 'buy':
+						return "报备已确认";
+					default:
+						return "未知";
+				}
+			}
 			// 加载报备待办信息
 			function loadTODO() {
 				var userGroupType = userGroup.type;
 				var recommendToDoTable = document.getElementById('recommendToDoTable');
+				
 				//先删除表格中所有行
 				if (userGroupType) {
 					//recommendToDoTable.innerHTML = '<li class="mui-table-view-cell">正在加载数据，请稍候...</li>';
@@ -409,7 +424,10 @@
 								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
 								html.push('</div>');
 								html.push('</div>');
-								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.recommendConfirm(\'', recommend.recommendId, '\' ,app.recommendConfirmCallback)">确认报备</button>');
+								console.log("status:" + recommend.status);
+								var confirmName = getConfirmStatusName(recommend.status);
+								console.log("confirmName:" + confirmName);
+								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.recommendConfirm(\'', recommend.recommendId, '\' ,app.recommendConfirmCallback)">' + confirmName + '</button>');
 								html.push('</li>');
 							}
 							if (html.length > 10) {
