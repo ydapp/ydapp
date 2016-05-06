@@ -285,11 +285,17 @@
 	};
 	owner.getRecommendStatusName = function(status) {
 		if ("confirm" == status) {
-			return "已确认";
+			return "确";
+		} else if ("buy" == status) {
+			return "购";
+		} else if ("order" == status) {
+			return "订";
+		} else if ("pledges" == status) {
+			return "筹";
 		} else if ("present" == status) {
-			return "已到场";
+			return "来";
 		} else if ("appointment" == status) {
-			return "已报备";
+			return "报";
 		}
 	}
 
