@@ -353,11 +353,26 @@
 					}, 0);
 				});
 			};
+			var getConfirmStatusName = function(currentStatus){
+				switch (currentStatus) {
+					case 'present':
+						return "筹";
+					case 'pledges':
+						return "订";
+					case 'order':
+						return "购";
+					case 'buy':
+						return "报备确认";
+					default:
+						return "未知";
+				}
+			}
 			// 加载报备待办信息
 			function loadTODO() {
 				console.log("加载数据");
 				var userGroupType = userGroup.type;
 				var recommendToDoTable = document.getElementById('recommendToDoTable');
+				
 				//先删除表格中所有行
 				if (userGroupType) {
 					//加载报备数据（经纪人）
@@ -413,7 +428,10 @@
 								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
 								html.push('</div>');
 								html.push('</div>');
-								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.recommendConfirm(\'', recommend.recommendId, '\' ,app.recommendConfirmCallback)">确认报备</button>');
+								console.log("status:" + recommend.status);
+								var confirmName = getConfirmStatusName(recommend.status);
+								console.log("confirmName:" + confirmName);
+								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.recommendConfirm(\'', recommend.recommendId, '\' ,app.recommendConfirmCallback)">' + confirmName + '</button>');
 								html.push('</li>');
 							}
 							if (html.length > 10) {
@@ -435,36 +453,69 @@
 				var recommendDoneTable = document.getElementById('recommendDoneTable');
 				//先删除表格中所有行
 				if (userGroupType) {
-					var waiting = null;
-					if (recommendDoneTable.innerHTML.length < 100) {
-						waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+					if ("salesman" == userGroupType) {
+						var waiting = null;
+						if (recommendDoneTable.innerHTML.length < 100) {
+							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+						}
+						//加载报备数据（经纪人）
+						app.getMyPresent(function(data) {
+							if (waiting && waiting.close) {
+								waiting.close();
+							}
+							var html = [];
+							for (temp in data) {
+								var recommend = data[temp];
+								html.push('<li class="mui-table-view-cell">');
+								html.push('<div class="mui-table">');
+								html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
+								html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
+								html.push('</div>');
+								html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
+								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
+								html.push('</div>');
+								html.push('</div>');
+								html.push('<span class="mui-badge mui-badge-success">', app.getRecommendStatusName(recommend.status), '</span>');
+								html.push('</li>');
+							}
+							if (html.length > 10) {
+								recommendDoneTable.innerHTML = html.join('');
+							} else {
+								recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
+							}
+						});
+					} else if ("commissioner" == userGroupType) {
+						var waiting = null;
+						if (recommendDoneTable.innerHTML.length < 100) {
+							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+						}
+						//加载报备数据（经纪人）
+						app.getMyConfirm(function(data) {
+							if (waiting && waiting.close) {
+								waiting.close();
+							}
+							var html = [];
+							for (temp in data) {
+								var recommend = data[temp];
+								html.push('<li class="mui-table-view-cell">');
+								html.push('<div class="mui-table">');
+								html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
+								html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
+								html.push('</div>');
+								html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
+								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
+								html.push('</div>');
+								html.push('</div>');
+								html.push('<span class="mui-badge mui-badge-success">', app.getRecommendStatusName(recommend.status), '</span>');
+								html.push('</li>');
+							}
+							if (html.length > 10) {
+								recommendDoneTable.innerHTML = html.join('');
+							} else {
+								recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
+							}
+						});
 					}
-					//加载报备数据（经纪人）
-					app.getMyPresent(function(data) {
-						if (waiting && waiting.close) {
-							waiting.close();
-						}
-						var html = [];
-						for (temp in data) {
-							var recommend = data[temp];
-							html.push('<li class="mui-table-view-cell">');
-							html.push('<div class="mui-table">');
-							html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
-							html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
-							html.push('</div>');
-							html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
-							html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
-							html.push('</div>');
-							html.push('</div>');
-							html.push('<span class="mui-badge mui-badge-success">', app.getRecommendStatusName(recommend.status), '</span>');
-							html.push('</li>');
-						}
-						if (html.length > 10) {
-							recommendDoneTable.innerHTML = html.join('');
-						} else {
-							recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
-						}
-					});
 				} else {
 					//用户组为空，到服务器获取一次
 					recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">未能获得用户权限，请重新登录</li>';
