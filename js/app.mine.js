@@ -76,11 +76,15 @@
 					var success = data.success;
 					if (success) {
 						//自动移除这一行
-						var _el = document.getElementById(recommendId);
-						if (_el) {
-							_el.style.display = 'none';
-							_el.parentNode.removeChild(_el);
-						}
+//						var _el = document.getElementById(recommendId);
+//						if (_el) {
+//							_el.style.display = 'none';
+//							_el.parentNode.removeChild(_el);
+//						}
+						// 清空数据并加载
+						var recommendToDoTable = document.getElementById('recommendToDoTable');
+						recommendToDoTable.innerHTML = "";
+						app.loadTODO();
 						return callback("客户到场操作成功");
 					} else {
 						return callback(data.message || '客户到场操作失败');
