@@ -216,11 +216,6 @@
 		<li class="mui-table-view-cell">获取通讯录数据失败</li>
 		{{/if}}
 	</script>
-	<!--
-    	作者：gadrel@163.com
-    	时间：2016-05-06
-    	描述：推荐信息详情模版
-    -->
 	<script id="tmpl_recommendInfo" type="text/html">
 		<ul class="mui-table-view">
 			<li class="mui-table-view-cell">
@@ -321,6 +316,7 @@
 				user = state.user || {};
 				userGroup = state.userGroup || {};
 				userModel = state.userModel || {};
+				console.log("userModel:" + userModel);
 				document.getElementById('userInfo_userNameId').innerHTML = user.userName;
 				document.getElementById('userInfo_userNameNick').innerHTML = user.loginName;
 				document.getElementById('userInfo_userTypeId').innerHTML = userGroup.name;
@@ -369,12 +365,12 @@
 			}
 			// 加载报备待办信息
 			function loadTODO() {
-				console.log("加载数据");
 				var userGroupType = userGroup.type;
 				var recommendToDoTable = document.getElementById('recommendToDoTable');
 				
 				//先删除表格中所有行
 				if (userGroupType) {
+					//recommendToDoTable.innerHTML = '<li class="mui-table-view-cell">正在加载数据，请稍候...</li>';
 					//加载报备数据（经纪人）
 					if ("salesman" == userGroupType) {
 						var waiting = null;
@@ -446,12 +442,12 @@
 					recommendToDoTable.innerHTML = '<li class="mui-table-view-cell">未能获得用户权限，请重新登录</li>';
 				}
 			}
-			app.loadTODO = loadTODO;
 			//已经处理过程的报备信息列表
 			function loadDone() {
 				var userGroupType = userGroup.type;
 				var recommendDoneTable = document.getElementById('recommendDoneTable');
 				//先删除表格中所有行
+				//recommendDoneTable.innerHTML = '<li class="mui-table-view-cell">正在加载数据，请稍候...</li>';
 				if (userGroupType) {
 					if ("salesman" == userGroupType) {
 						var waiting = null;
@@ -544,6 +540,14 @@
 					if (waiting && waiting.close) {
 						waiting.close();
 					}
+					console.log("通讯录:" + data);
+					for (o in data){
+						console.log("属性:" + o + ":" + data[o]);
+					}
+					console.log("total:" + data.total);
+					console.log("rows:" + data.rows);
+					console.log("rows.length:" + data.rows.length);
+					console.log("tel:" + data.rows[0].tel);
 					var html = template('tmpl_phonebook', data);
 					phonebookList.innerHTML = html;
 				});
