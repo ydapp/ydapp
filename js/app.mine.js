@@ -153,44 +153,54 @@
 	//驻场专员操作
 	owner.recommendConfirm = function(recommendId, callback) {
 		console.log("驻场专员对报备信息进行操作：" + recommendId);
-		var state = app.getState() || {};
-		var user = state.user || {};
-		var userId = user.userId;
-		var waiting = plus.nativeUI.showWaiting("正在处理报备确认操作，请等待...");
-		mui.ajax(host + '/api/recommends/recommendConfirm/' + recommendId + '/' + userId + '.json', {
-			contentType: 'application/json',
-			dataType: 'json', //服务器返回json格式数据
-			type: 'put', //HTTP请求类型
-			timeout: 30000, //超时时间设置为10秒；
-			success: function(data, textStatus, xhr) {
-				waiting.close();
-				console.log("驻场专员操作成功");
-				//服务器返回响应，根据响应结果，分析是否登录成功；
-				if (data) {
-					var success = data.success;
-					if (success) {
-						//自动移除这一行
-						var _el = document.getElementById(recommendId);
-						console.log("驻场专员操作recommendId:" + recommendId + " 操作成功");
-						//loadTODO();
-						return callback("确认操作成功");
-					} else {
-						return callback(data.message || '确认操作失败');
+		
+		mui.prompt('请输出意见','请输入意见','驻场专员意见',['取消','确定'],function(e){
+			var confirmAdvice = e.value;
+			console.log("意见:" + confirmAdvice);
+			if (e.index == 1){
+				var state = app.getState() || {};
+				var user = state.user || {};
+				var userId = user.userId;
+				var waiting = plus.nativeUI.showWaiting("正在处理报备确认操作，请等待...");
+				var confirmInfo = {"recommendId":recommendId,"confirmUserId":userId,"recommendConfirmAdvice":confirmAdvice,"pageSize":10};
+				mui.ajax(host + '/api/recommends/recommendConfirm.json', {
+					contentType: "application/json;charset=utf-8",
+					dataType: 'json', //服务器返回json格式数据
+					data:JSON.stringify(confirmInfo),
+					type: 'post', //HTTP请求类型
+					timeout: 30000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						waiting.close();
+						console.log("驻场专员操作成功");
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (data) {
+							var success = data.success;
+							if (success) {
+								//自动移除这一行
+								var _el = document.getElementById(recommendId);
+								console.log("驻场专员操作recommendId:" + recommendId + " 操作成功");
+								//loadTODO();
+								return callback("确认操作成功");
+							} else {
+								return callback(data.message || '确认操作失败');
+							}
+						} else {
+							callback('报备确认操作失败');
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						waiting.close();
+						//异常处理；
+						if (type == conf.timeout) {
+							callback('系统超时，请检测网络');
+						} else {
+							callback('报备确认操作失败');
+						}
 					}
-				} else {
-					callback('报备确认操作失败');
-				}
-			},
-			error: function(xhr, type, errorThrown) {
-				waiting.close();
-				//异常处理；
-				if (type == conf.timeout) {
-					callback('系统超时，请检测网络');
-				} else {
-					callback('报备确认操作失败');
-				}
+				});
 			}
-		});
+		},'div');
+		
 	};
 	owner.recommendConfirmCallback = function(err) {
 		if (err === true) {
@@ -202,7 +212,7 @@
 			return;
 		}
 	};
-
+	
 	//获取我的已经到场的报备信息
 	owner.getMyPresent = function(callback) {
 		var state = app.getState() || {};

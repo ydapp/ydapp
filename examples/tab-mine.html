@@ -258,6 +258,7 @@
 					</div>
 				</div>
 			</li>
+			<!--
 			<li class="mui-table-view-cell">
 				<div class=" mui-table ">
 					<div class="mui-table-cell mui-col-xs-4">
@@ -268,13 +269,15 @@
 					</div>
 				</div>
 			</li>
+			-->
 			<li class="mui-table-view-cell">
 				<div class=" mui-table ">
 					<div class="mui-table-cell mui-col-xs-4">
 						推荐人
 					</div>
 					<div class="mui-table-cell mui-col-xs-8">
-						{{refreeNick}}（{{refreeName}}）
+						{{refreeNick}}（{{refreeName}}）</p>
+						【{{refreeExtend}}】
 					</div>
 				</div>
 			</li>
@@ -285,6 +288,28 @@
 					</div>
 					<div class="mui-table-cell mui-col-xs-8">
 						{{remark}}
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						状态
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{statusTitle}}
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div class=" mui-table ">
+					<div class="mui-table-cell mui-col-xs-4">
+						意见
+					</div>
+					<div class="mui-table-cell mui-col-xs-8">
+						{{each recommendConfirmAdvice}}
+						{{$value}}</p>
+						{{/each}}
 					</div>
 				</div>
 			</li>
@@ -317,9 +342,36 @@
 				userGroup = state.userGroup || {};
 				userModel = state.userModel || {};
 				console.log("userModel:" + userModel);
+				console.log("userModel.groupType:" + userModel.groupType);
+				console.log("userModel.groupTypeTitle:" + userModel.groupTypeTitle);
+				console.log("userModel.brokingFirm:" + userModel.brokingFirm);
+				console.log("userModel.building:" + userModel.building);
+				var userRoleTitle = "";
+				var userExtend = "";
+				if (userModel.groupType == 'brokingFirm'){
+					if (userModel.brokingFirm){
+						userExtend = userModel.brokingFirm;
+					} else {
+						userExtend = "未配置经纪公司";
+					}
+				} else if (userModel.groupType == 'salesman'){
+					if (userModel.brokingFirm){
+						userExtend = userModel.brokingFirm;
+					} else {
+						userExtend = "未配置经纪公司";
+					}
+				} else if (userModel.groupType == 'commissioner'){
+					if (userModel.building){
+						userExtend = userModel.building;
+					} else {
+						userExtend = "未配置楼盘";
+					}
+				}
+				userRoleTitle = userModel.groupTypeTitle + "【" + userExtend + "】";
+				console.log("userRoleTitle:" + userRoleTitle);
 				document.getElementById('userInfo_userNameId').innerHTML = user.userName;
 				document.getElementById('userInfo_userNameNick').innerHTML = user.loginName;
-				document.getElementById('userInfo_userTypeId').innerHTML = userGroup.name;
+				document.getElementById('userInfo_userTypeId').innerHTML = userRoleTitle;
 				document.getElementById('userInfo_userIcon').src = app.conf.host + "/api/avatar/" + user.userId + ".png";
 				//处理view的后退与webview后退
 				var oldBack = mui.back;
@@ -522,6 +574,9 @@
 				var recommendInfo = document.getElementById('recommendInfo');
 				app.getRecommendDetail(recommendId, function(data) {
 					if (data.success) {
+						var recommendConfirmAdvice = data.result.recommendConfirmAdvice;
+						recommendConfirmAdvice = recommendConfirmAdvice.split("\n\r");
+						data.result.recommendConfirmAdvice = recommendConfirmAdvice;
 						var html = template('tmpl_recommendInfo', data.result);
 						recommendInfo.innerHTML = html;
 					} else {
