@@ -51,7 +51,7 @@
 		<footer class="pis-bar mui-bar-footer" style="text-align: center;">
 			<div class="mui-row">
 				<div class="mui-col-xs-4">
-					<a type="button" id="id_propertyTel" class="mui-btn mui-btn-primary" href="tel:123456789">
+					<a type="button" id="id_propertyTel" class="mui-btn mui-btn-primary" href="tel:88888888">
 						<span class="mui-icon mui-icon-phone"></span>案场电话
 					</a>
 				</div>
@@ -72,15 +72,14 @@
 
 			<div class="mui-row">
 				<div class="mui-col-xs-9" style="padding-left: 5px;">
-					<div style="padding-top: 6px;"><strong class="mui-h3" id="id_propertyName">亚东观云国际</strong>【<span id="buildingArea">雨花区</span>】</div>
-					<div style="padding-top: 10px;">均价：<span ="id_avgPrice"></span>14000元/平</div>
-					<div>佣金：18000-30000</div>
+					<div style="padding-top: 6px;"><strong class="mui-h3" id="header_id_propertyName">楼盘名称</strong>【<span id="header_id_cityTitle"></span>】</div>
+					<div style="padding-top: 10px;">均价：<span id="header_id_avgPrice"></span>元/平</div>
 				</div>
 				<div class="mui-col-xs-3">
 					<div class="am-text-lg">已推荐</div>
-					<div>2341</div>
+					<div id="header_id_recommendedNumber"></div>
 					<div class="am-text-lg">已预约</div>
-					<div>1871</div>
+					<div id="header_id_viewTimes"></div>
 				</div>
 			</div>
 			<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted" />
@@ -90,35 +89,35 @@
 						<table>
 							<tr>
 								<td class="table-label">首期开盘：</td>
-								<td>2015-05</td>
+								<td id="id_openDate"></td>
 							</tr>
 							<tr>
 								<td class="table-label">楼盘特色：</td>
-								<td>亚东经典楼盘、靠近市区</td>
+								<td id="id_characteristic"></td>
 							</tr>
 							<tr>
 								<td class="table-label">装修类型：</td>
-								<td>毛坯</td>
+								<td id="id_propertyType">毛坯</td>
 							</tr>
 							<tr>
 								<td class="table-label">占地面积：</td>
-								<td>约9万平方米</td>
+								<td id="id_area">约9万平方米</td>
 							</tr>
 							<tr>
 								<td class="table-label">产权：</td>
-								<td>70年</td>
+								<td ><span id="id_year"></span>年</td>
 							</tr>
 							<tr>
 								<td class="table-label">绿化率：</td>
-								<td>25%</td>
+								<td><span id="id_greenRate"></span>%</td>
 							</tr>
 							<tr>
 								<td class="table-label">物业公司：</td>
-								<td>莲花物业</td>
+								<td id="id_propertyCompany"></td>
 							</tr>
 							<tr>
 								<td class="table-label">交付时间：</td>
-								<td>2015-10</td>
+								<td id="id_deliveryTime">2015-10</td>
 							</tr>
 						</table>
 					</div>
@@ -169,6 +168,24 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
+		<script src="../js/feedback-page.js"></script>
+		<script src="../js/template.js"></script>
+		<script id="tmpl_trafficFacilities" type="text/html">
+			{{each rows}}
+			<table>
+				<tr><td class="table-label">{{$value.name}}:</td><td>{{$value.value}}</td></tr>
+			</table>
+			{{/each}}
+		</script>
+		<script id="tmpl_houseType" type="text/html">
+			{{each rows}}
+			<table>
+				<tr><td class="table-label">{{$value.name}}:</td><td>
+					<img width="200" height="200" src="{{$value.value}}"></img>
+					</td></tr>
+			</table>
+			{{/each}}
+		</script>
 		<script type="text/javascript" charset="utf-8">
 			
 			(function(mui, doc) {
@@ -252,9 +269,55 @@
 						console.log("city:" + building.city);
 						console.log("cityTitle:" + building.cityTitle);
 						if (building) {
+							console.log("楼盘信息:" + JSON.stringify(building));
+							document.getElementById("id_filePath").src=building.filePath;
 							document.getElementById("goSubscriptionRules").title=building.subscriptionRules;
 							document.getElementById("id_propertyTel").href="tel:" + building.propertyTel;
-							document.getElementById("id_propertyName").innerHTML = building.propertyName;
+							document.getElementById("header_id_propertyName").innerHTML = building.propertyName;
+							document.getElementById("header_id_cityTitle").innerHTML = building.cityTitle;
+							document.getElementById("header_id_avgPrice").innerHTML = building.avgPrice ? building.avgPrice : "";
+							document.getElementById("header_id_recommendedNumber").innerHTML = building.recommendedNumber ? building.recommendedNumber : 0 ;
+							document.getElementById("header_id_viewTimes").innerHTML = building.viewTimes ? building.viewTimes : 0;
+							
+							document.getElementById("id_openDate").innerHTML = building.openDate ? building.openDate.substring(0, 10) : "";
+							document.getElementById("id_characteristic").innerHTML = building.characteristic ? building.characteristic : "";
+							document.getElementById("id_propertyType").innerHTML = building.propertyType ? building.propertyType : "";
+							document.getElementById("id_area").innerHTML = building.area ? building.area : "";
+							document.getElementById("id_greenRate").innerHTML = building.greenRate ? building.greenRate : "";
+							document.getElementById("id_year").innerHTML = building.years ? building.years : "";
+							document.getElementById("id_propertyCompany").innerHTML = building.propertyCompany ? building.propertyCompany : "";
+							document.getElementById("id_deliveryTime").innerHTML = building.deliveryTime ? building.deliveryTime.substring(0, 10) : "";
+							var trafficFacilities = building.trafficFacilities;
+							var rows = new Array();
+							if (trafficFacilities){
+								var lines = trafficFacilities.split("***");
+								for (var i = 1; i < lines.length;i++){
+									var trafficFacilitiesKV = lines[i].split(":::");
+									var trafficFacilitiesJson = {"name":trafficFacilitiesKV[0],"value":trafficFacilitiesKV[1]};
+									rows[i-1] = trafficFacilitiesJson;
+								}
+							}
+							var trafficFacilitiesData = {"rows":rows};
+							console.log("trafficFacilitiesDataJSOn:" + JSON.stringify(trafficFacilitiesData));
+							var trafficFacilitiesHTML = template('tmpl_trafficFacilities', trafficFacilitiesData);
+							console.log("trafficFacilitiesHTML:" + trafficFacilitiesHTML);
+							document.getElementById("content2").innerHTML = trafficFacilitiesHTML;
+							
+							var houseType = building.houseType;
+							rows = new Array();
+							if (houseType){
+								var lines = houseType.split("***");
+								for (var i = 1; i < lines.length;i++){
+									var houseTypeKV = lines[i].split(":::");
+									var houseTypeJson = {"name":houseTypeKV[0],"value":app.conf.host+"/"+houseTypeKV[1]};
+									rows[i-1] = houseTypeJson;
+								}
+							}
+							var houseTypeData = {"rows":rows};
+							console.log("houseTypeDataJSOn:" + JSON.stringify(houseTypeData));
+							var houseTypeHTML = template('tmpl_houseType', houseTypeData);
+							console.log("houseTypeHTML:" + houseTypeHTML);
+							document.getElementById("content3").innerHTML = houseTypeHTML;
 						}
 						
 					},
