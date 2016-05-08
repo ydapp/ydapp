@@ -234,7 +234,7 @@
 						联系电话
 					</div>
 					<div class="mui-table-cell mui-col-xs-8">
-						{{customerTel}}
+						<a href="tel:{{customerTel}}">{{customerTel}}</a>
 					</div>
 				</div>
 			</li>
@@ -575,8 +575,12 @@
 				app.getRecommendDetail(recommendId, function(data) {
 					if (data.success) {
 						var recommendConfirmAdvice = data.result.recommendConfirmAdvice;
-						recommendConfirmAdvice = recommendConfirmAdvice.split("\n\r");
-						data.result.recommendConfirmAdvice = recommendConfirmAdvice;
+						if (recommendConfirmAdvice){
+							recommendConfirmAdvice = recommendConfirmAdvice.split("\n\r");
+							data.result.recommendConfirmAdvice = recommendConfirmAdvice;
+						} else {
+							data.result.recommendConfirmAdvice = new Array();
+						}
 						var html = template('tmpl_recommendInfo', data.result);
 						recommendInfo.innerHTML = html;
 					} else {
