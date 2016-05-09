@@ -91,7 +91,6 @@
 				pullRefresh: {
 					container: '#pullrefresh',
 					down: {
-						contentrefresh: '正在加载...',
 						callback: pulldownRefresh
 					},
 					up: {
@@ -108,43 +107,76 @@
 			});
 			// 在刚方法内添加页面第一次被打开时需要执行的方法
 			app.initPage = function() {
-				var slider = mui("#slider");
-				slider.slider({
-					interval: 5000
-				});
-				// 触发下拉加载时间
 				setTimeout(function() {
+					// 触发下拉加载时间
 					mui('#pullrefresh').pullRefresh().pullupLoading();
 				}, 0);
 			};
-			var count = 0;
+			
 			var myList = document.getElementById('myList');
-			var page = 0;
-			//下拉，相当于初始化
+			//当前页数
+			var page = 1;
+			//每页显示大小
+			var pageSize = 10;
+			//总页数
+			var total = 0;
 			function pulldownRefresh() {
-				page = 0;
-				myList.innerHTML="";
-				pullupLoad();
-			}
-			//往上推，加载更多数据
-			function pullupLoad() {
+				console.log("pulldownRefresh action");
+				console.log("往下拉，每次都强制获取数据");
+				mui('#pullrefresh').pullRefresh().refresh(true);
 				// 初始化数据
 				mui.ajax(app.conf.host + "/api/properties.json", {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
+					data:{page:1,rows:pageSize},
 					timeout: 10000, //超时时间设置为10秒；
-					data:{"page":++page,"rows":10},
 					success: function(data, textStatus, xhr) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						if (data) {
+							
+							// 清空原有数据
+							myList.innerHTML = "";
+							console.log("下拉成功后，设置page为2");
+							total = data.total;
+							page = 2;
 							myList.innerHTML = myList.innerHTML + data.html;
-						} else {
-							myList.innerHTML = myList.innerHTML + "加载数据失败了";
+							
 						}
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh(data.total <= page*10); //参数为true代表没有更多数据了。
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+						var over = (page-1)*pageSize >= total;
+						console.log("show over:" + over);
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(over); 
 					}
 				});
 			}
+			function pullupLoad() {
+				console.log("pullupLoad 往上推");
+				// 初始化数据
+				mui.ajax(app.conf.host + "/api/properties.json", {
+					dataType: 'json', //服务器返回json格式数据
+					data:{page:page,rows:pageSize},
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						
+						if (data) {
+							
+							console.log("获取成功之后，设置page+1:");
+							total = data.total;
+							page++;
+							myList.innerHTML = myList.innerHTML + data.html;
+							
+						}
+						//所有条数显示完了，就不在支持往上推获取新数据了
+						var over = (page-1)*pageSize >= total;
+						console.log("show over:" + over);
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(over); 
+						
+					}
+				});
+			}
+			
 			//主列表点击事件
 			mui('#myList').on('tap', 'a', function() {
 				var conf = {};

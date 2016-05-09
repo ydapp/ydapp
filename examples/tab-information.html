@@ -53,15 +53,22 @@
 				}, 0);
 			};
 			var myListBox = document.getElementById('myList');
-			var count = 0;
-
+			
+			//当前页数
+			var page = 1;
+			//每页显示大小
+			var pageSize = 10;
+			//总页数
+			var total = 0;
 			function pulldownRefresh() {
-				count = 1;
+				console.log("pulldownRefresh action");
+				console.log("往下拉，每次都强制获取数据");
 				mui('#pullrefresh').pullRefresh().refresh(true);
 				// 初始化数据
 				mui.ajax(app.conf.infoListUrl, {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'post', //HTTP请求类型
+					data:{page:1,pageSize:pageSize},
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(data, textStatus, xhr) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
@@ -71,30 +78,46 @@
 								// 清空原有数据
 								myListBox.innerHTML = "";
 								var rows = data.result || data.rows;
+								console.log("下拉成功后，设置page为2");
+								total = data.total;
+								page = 2;
 								renderChild(rows);
 							}
 						}
 						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+						var over = (page-1)*pageSize >= total;
+						console.log("show over:" + over);
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(over); 
 					}
 				});
 			}
 
 			function pullupLoad() {
+				console.log("pullupLoad 往上推");
 				// 初始化数据
 				mui.ajax(app.conf.infoListUrl, {
 					dataType: 'json', //服务器返回json格式数据
+					data:{page:page,pageSize:pageSize},
 					type: 'post', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(data, textStatus, xhr) {
 						//服务器返回响应，根据响应结果，分析是否登录成功；
+						
 						if (data) {
 							var success = data.success;
 							if (success) {
 								var rows = data.result || data.rows;
+								console.log("获取成功之后，设置page+1:");
+								total = data.total;
+								page++;
 								renderChild(rows);
 							}
 						}
-						mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+						//所有条数显示完了，就不在支持往上推获取新数据了
+						var over = (page-1)*pageSize >= total;
+						console.log("show over:" + over);
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh(over); 
+						
 					}
 				});
 			}
