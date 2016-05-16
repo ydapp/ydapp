@@ -47,10 +47,13 @@
 						</div>
 						<ul class="mui-table-view mui-table-view-chevron">
 							<li class="mui-table-view-cell">
-								<a href="#recommendToDo" class="mui-navigate-right">报备待办信息</a>
+								<a href="#recommendToDo" class="mui-navigate-right">待办</a>
 							</li>
 							<li class="mui-table-view-cell">
-								<a href="#recommendDone" class="mui-navigate-right">报备已办信息</a>
+								<a href="#recommendDoing" class="mui-navigate-right">在办</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="#recommendDone" class="mui-navigate-right">已办</a>
 							</li>
 						</ul>
 						<ul class="mui-table-view mui-table-view-chevron">
@@ -83,12 +86,29 @@
 				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 					<span class="mui-icon mui-icon-left-nav"></span>我的
 				</button>
-				<h1 class="mui-center mui-title">报备待办信息</h1>
+				<h1 class="mui-center mui-title">待办</h1>
 			</div>
 			<div class="mui-page-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view" id="recommendToDoTable">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--报备在办信息页面-->
+		<div id="recommendDoing" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>我的
+				</button>
+				<h1 class="mui-center mui-title">在办</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view" id="recommendDoingTable">
 						</ul>
 					</div>
 				</div>
@@ -100,7 +120,7 @@
 				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 					<span class="mui-icon mui-icon-left-nav"></span>我的
 				</button>
-				<h1 class="mui-center mui-title">报备已办信息</h1>
+				<h1 class="mui-center mui-title">已办</h1>
 			</div>
 			<div class="mui-page-content">
 				<div class="mui-scroll-wrapper">
@@ -154,9 +174,33 @@
 			<div class="mui-page-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<p>关于团家宝</p>
 						<p>关于团家宝经纪人</p>
-						<p>这里可以给一些APP或公司的说明信息。</p>
+						团家宝经纪人APP是专门为经纪人介绍楼盘、快速报备和跟踪管理使用，同时提供通讯录以方便联系驻场专员等功能。
+						<p>APP使用帮助</p>
+	<ul>	
+		<h1>业务员</h1>
+    	<b>(申）推荐申报（业务员）</b>
+        <li>打开手机APP，使用自己账号登陆（手机号码+密码），登陆成功默认进入楼盘列表页面</li>
+        <li>选择需要推荐的楼盘，进入楼盘详情页面</li>
+        <li>在详情页面右下角点击“立即推荐”按钮</li>
+        <li>在推荐页面填写 客户名称、客户电话和详情。（城市、楼盘和推荐人自动带入）</li>
+        <li>填写完成之后，点击推荐按钮即可</li>
+        
+    <b>（来） 客户到现场（业务员）</b>
+        <li>登陆手机APP，进入“我”页面</li>
+        <li>点击“报备待办信息”，出现待办报备信息列表页面；</li>
+        <li>在每条列表中的右边有一个“来”字样的按钮；</li>
+        <li>点击“来”按钮即可完成操作；</li>
+        <li>在“报备已办信息”列表页面可以查看自己所有已经办理的报备列表；</li>
+        <h1>驻场专员</h1>
+    <b>（筹、订、购、报备确认）报备确认（驻场专员）</b>
+        <li>登陆手机APP，进入“我”页面</li>
+        <li>点击“报备待办信息”，出现待办报备信息列表页面；</li>
+        <li>在每条列表中的右边有一个“来”字样的按钮；</li>
+        <li>点击“来”按钮即可完成操作；</li>
+        <li>在“报备已办信息”列表页面可以查看自己所有已经办理的报备列表；</li>
+</ul>
+						
 					</div>
 				</div>
 			</div>
@@ -495,6 +539,81 @@
 				}
 			}
 			//已经处理过程的报备信息列表
+			function loadDoing() {
+				var userGroupType = userGroup.type;
+				var recommendDoingTable = document.getElementById('recommendDoingTable');
+				//先删除表格中所有行
+				//recommendDoingTable.innerHTML = '<li class="mui-table-view-cell">正在加载数据，请稍候...</li>';
+				if (userGroupType) {
+					if ("salesman" == userGroupType) {
+						var waiting = null;
+						if (recommendDoingTable.innerHTML.length < 100) {
+							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+						}
+						//加载报备数据（经纪人）
+						app.getMyPresentDoing(function(data) {
+							if (waiting && waiting.close) {
+								waiting.close();
+							}
+							var html = [];
+							for (temp in data) {
+								var recommend = data[temp];
+								html.push('<li class="mui-table-view-cell">');
+								html.push('<div class="mui-table">');
+								html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
+								html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
+								html.push('</div>');
+								html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
+								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
+								html.push('</div>');
+								html.push('</div>');
+								html.push('<span class="mui-badge mui-badge-success">', app.getRecommendStatusName(recommend.status), '</span>');
+								html.push('</li>');
+							}
+							if (html.length > 10) {
+								recommendDoingTable.innerHTML = html.join('');
+							} else {
+								recommendDoingTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
+							}
+						});
+					} else if ("commissioner" == userGroupType) {
+						var waiting = null;
+						if (recommendDoingTable.innerHTML.length < 100) {
+							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
+						}
+						//加载报备数据（经纪人）
+						app.getMyConfirmDoing(function(data) {
+							if (waiting && waiting.close) {
+								waiting.close();
+							}
+							var html = [];
+							for (temp in data) {
+								var recommend = data[temp];
+								html.push('<li class="mui-table-view-cell">');
+								html.push('<div class="mui-table">');
+								html.push('<div class="mui-table-cell mui-col-xs-4 mui-ellipsis">');
+								html.push('<a href="#recommendDetail/', recommend.recommendId, '" >', recommend.customerName, '</a>');
+								html.push('</div>');
+								html.push('<div class="mui-table-cell mui-col-xs-8 mui-ellipsis">');
+								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
+								html.push('</div>');
+								html.push('</div>');
+								html.push('<span class="mui-badge mui-badge-success">', app.getRecommendStatusName(recommend.status), '</span>');
+								html.push('</li>');
+							}
+							if (html.length > 10) {
+								recommendDoingTable.innerHTML = html.join('');
+							} else {
+								recommendDoingTable.innerHTML = '<li class="mui-table-view-cell">暂无数据</li>';
+							}
+						});
+					}
+				} else {
+					//用户组为空，到服务器获取一次
+					recommendDoingTable.innerHTML = '<li class="mui-table-view-cell">未能获得用户权限，请重新登录</li>';
+				}
+			}
+			//已经处理过程的报备信息列表
 			function loadDone() {
 				var userGroupType = userGroup.type;
 				var recommendDoneTable = document.getElementById('recommendDoneTable');
@@ -507,7 +626,7 @@
 							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
 						}
 						//加载报备数据（经纪人）
-						app.getMyPresent(function(data) {
+						app.getMyPresentDone(function(data) {
 							if (waiting && waiting.close) {
 								waiting.close();
 							}
@@ -538,7 +657,7 @@
 							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
 						}
 						//加载报备数据（经纪人）
-						app.getMyConfirm(function(data) {
+						app.getMyConfirmDone(function(data) {
 							if (waiting && waiting.close) {
 								waiting.close();
 							}

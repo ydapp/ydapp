@@ -212,15 +212,22 @@
 			return;
 		}
 	};
-	
 	//获取我的已经到场的报备信息
-	owner.getMyPresent = function(callback) {
+	owner.getMyPresentDoing = function(callback) {
+		this.getMyPresent(host + '/api/recommends/presented/doing/' + userId + '.json',callback);
+	}
+	//获取我的已经到场的报备信息
+	owner.getMyPresentDone = function(callback) {
+		this.getMyPresent(host + '/api/recommends/presented/done/' + userId + '.json',callback);
+	}
+	//获取我的已经到场的报备信息
+	owner.getMyPresent = function(url,callback) {
 		var state = app.getState() || {};
 		var user = state.user || {};
 		var userId = user.userId;
 		//这里报plus未定义，先注释掉
 		//var waiting = plus.nativeUI.showWaiting("正在获取报备列表，请等待...");
-		mui.ajax(host + '/api/recommends/presented/' + userId + '.json', {
+		mui.ajax(url, {
 			dataType: 'json', //服务器返回json格式数据
 			type: 'get', //HTTP请求类型
 			timeout: 30000, //超时时间设置为10秒；
@@ -253,15 +260,23 @@
 			}
 		});
 	};
-
+	
 	//获取我的已经到场的报备信息
-	owner.getMyConfirm = function(callback) {
+	owner.getMyConfirmDoing = function(callback) {
+		this.getMyConfirm(host + '/api/recommends/confirmed/doing/' + userId + '.json',callback);
+	}
+	//获取我的已经到场的报备信息
+	owner.getMyConfirmDone = function(callback) {
+		this.getMyConfirm(host + '/api/recommends/confirmed/done/' + userId + '.json',callback);
+	}
+	//获取我的已经到场的报备信息
+	owner.getMyConfirm = function(url,callback) {
 		var state = app.getState() || {};
 		var user = state.user || {};
 		var userId = user.userId;
 		//这里报plus未定义，先注释掉
 		//var waiting = plus.nativeUI.showWaiting("正在获取报备列表，请等待...");
-		mui.ajax(host + '/api/recommends/confirmed/' + userId + '.json', {
+		mui.ajax(url, {
 			dataType: 'json', //服务器返回json格式数据
 			type: 'get', //HTTP请求类型
 			timeout: 30000, //超时时间设置为10秒；
