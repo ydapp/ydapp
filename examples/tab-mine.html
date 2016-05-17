@@ -435,6 +435,8 @@
 					setTimeout(function() {
 						if (pageId == "recommendToDo") {
 							loadTODO();
+						} else if (pageId == "recommendDoing"){
+							loadDoing();
 						} else if (pageId == "recommendDone") {
 							loadDone();
 						} else if (pageId == "phonebook") {
@@ -489,7 +491,7 @@
 								html.push('<a href="tel:', recommend.customerTel, '"><span class="mui-icon mui-icon-phone"></span>', recommend.customerTel, '</a>');
 								html.push('</div>');
 								html.push('</div>');
-								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.customerPresent(\'', recommend.recommendId, '\' ,app.customerPresentCallback)">到场</button>');
+								html.push('<button type="button" class="mui-btn mui-btn-primary" onclick="app.customerPresent(\'', recommend.recommendId, '\' ,app.customerPresentCallback)">来</button>');
 								html.push('</li>');
 							}
 							if (html.length > 10) {
@@ -540,18 +542,21 @@
 			}
 			//已经处理过程的报备信息列表
 			function loadDoing() {
+				console.log("加载在办列表")
 				var userGroupType = userGroup.type;
 				var recommendDoingTable = document.getElementById('recommendDoingTable');
 				//先删除表格中所有行
 				//recommendDoingTable.innerHTML = '<li class="mui-table-view-cell">正在加载数据，请稍候...</li>';
 				if (userGroupType) {
 					if ("salesman" == userGroupType) {
+						console.log("加载业务员数据")
 						var waiting = null;
 						if (recommendDoingTable.innerHTML.length < 100) {
 							waiting = plus.nativeUI.showWaiting("正在加载，请稍候...");
 						}
 						//加载报备数据（经纪人）
 						app.getMyPresentDoing(function(data) {
+							console.log("业务员在办数据获取完毕，加载页面");
 							if (waiting && waiting.close) {
 								waiting.close();
 							}

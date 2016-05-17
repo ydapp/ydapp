@@ -214,11 +214,19 @@
 	};
 	//获取我的已经到场的报备信息
 	owner.getMyPresentDoing = function(callback) {
+		var userId = this.getUserId();
 		this.getMyPresent(host + '/api/recommends/presented/doing/' + userId + '.json',callback);
 	}
 	//获取我的已经到场的报备信息
 	owner.getMyPresentDone = function(callback) {
+		var userId = this.getUserId();
 		this.getMyPresent(host + '/api/recommends/presented/done/' + userId + '.json',callback);
+	}
+	owner.getUserId = function(){
+		var state = app.getState() || {};
+		var user = state.user || {};
+		var userId = user.userId;
+		return userId;
 	}
 	//获取我的已经到场的报备信息
 	owner.getMyPresent = function(url,callback) {
@@ -263,10 +271,12 @@
 	
 	//获取我的已经到场的报备信息
 	owner.getMyConfirmDoing = function(callback) {
+		var userId = this.getUserId();
 		this.getMyConfirm(host + '/api/recommends/confirmed/doing/' + userId + '.json',callback);
 	}
 	//获取我的已经到场的报备信息
 	owner.getMyConfirmDone = function(callback) {
+		var userId = this.getUserId();
 		this.getMyConfirm(host + '/api/recommends/confirmed/done/' + userId + '.json',callback);
 	}
 	//获取我的已经到场的报备信息
