@@ -130,7 +130,7 @@
 						li.className = 'mui-table-view-cell mui-media';
 						li.id = item.id;
 						var inner = ['<a href="information-detail.html?id=', item.id, '">'];
-						inner.push('<img class="mui-media-object mui-pull-left" src="', app.conf.host, '/', item.filePath, '">');
+						//inner.push('<img class="mui-media-object mui-pull-left" src="', app.conf.host, '/', item.filePath, '">');
 						inner.push('<div class="mui-media-body">', item.tile);
 						inner.push('<p class = "mui-ellipsis"> 【新闻】', item.pubTime.substr(0, 10));
 						inner.push('<i class="mui-icon mui-icon-star"></i>', item.viewTimes);

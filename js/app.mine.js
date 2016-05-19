@@ -212,6 +212,67 @@
 			return;
 		}
 	};
+	//驻场专员操作
+	owner.recommendAppendRemark = function(recommendId, callback) {
+		console.log("追加报备详情信息进行操作：" + recommendId);
+		
+		mui.prompt('请追加的详情信息','请输入详情','详情内容',['取消','确定'],function(e){
+			var recommendAppendRemark = e.value;
+			console.log("追加详情:" + recommendAppendRemark);
+			if (e.index == 1){
+				var state = app.getState() || {};
+				var user = state.user || {};
+				var userId = user.userId;
+				var waiting = plus.nativeUI.showWaiting("正在处理追加详情操作，请等待...");
+				var appendRemarkInfo = {"recommendId":recommendId,"appendUserId":userId,"recommendAppendRemark":recommendAppendRemark};
+				mui.ajax(host + '/api/recommends/recommendAppendRemark.json', {
+					contentType: "application/json;charset=utf-8",
+					dataType: 'json', //服务器返回json格式数据
+					data:JSON.stringify(appendRemarkInfo),
+					type: 'post', //HTTP请求类型
+					timeout: 30000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						waiting.close();
+						console.log("驻场专员操作成功");
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (data) {
+							var success = data.success;
+							if (success) {
+								
+								console.log("追加详情recommendId:" + recommendId + " 操作成功");
+								
+								return callback("确认操作成功");
+							} else {
+								return callback(data.message || '确认操作失败');
+							}
+						} else {
+							callback('追加详情操作失败');
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						waiting.close();
+						//异常处理；
+						if (type == conf.timeout) {
+							callback('系统超时，请检测网络');
+						} else {
+							callback('追加详情操作失败');
+						}
+					}
+				});
+			}
+		},'div');
+		
+	};
+	owner.recommendAppendRemarkCallback = function(err) {
+		if (err === true) {
+			mui.alert('追加报备详情操作失败', '对不起 !', function() {});
+			return;
+		}
+		if (err) {
+			toast(err);
+			return;
+		}
+	};
 	//获取我的已经到场的报备信息
 	owner.getMyPresentDoing = function(callback) {
 		var userId = this.getUserId();

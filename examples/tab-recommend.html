@@ -100,6 +100,34 @@
 			var submitButton = doc.getElementById("submitBtn");
 			var state = {};
 			var user = {};
+			//初始化building数据
+			initBuilding = function(){
+				var waiting = plus.nativeUI.showWaiting("数据加载中...");
+				var cityId = cityBox.value;
+				mui.ajax(app.conf.host + "/api/buildings/cityId/" + cityId + ".json", {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data, textStatus, xhr) {
+						waiting.close();
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						if (data) {
+							var success = data.success;
+							if (success) {
+								var rows = data.result || data.rows;
+								if (rows && rows.length > 0) {
+									var tmp = ['<option value="0">请选择...</option>'];
+									for (var i = 0; i < rows.length; i++) {
+										var item = rows[i];
+										tmp.push('<option value="', item.buildingId, '">', item.buildingName, '</option>')
+									}
+									housesBox.innerHTML = tmp.join('');
+								}
+							}
+						}
+					}
+				});
+			};
 			app.initPage = function() {
 				state = app.getState() || {};
 				user = state.user || {};
@@ -140,32 +168,10 @@
 				});
 				*/
 				cityBox.addEventListener('change', function() {
-					var waiting = plus.nativeUI.showWaiting("数据加载中...");
-					var cityId = cityBox.value;
-					mui.ajax(app.conf.host + "/api/buildings/cityId/" + cityId + ".json", {
-						dataType: 'json', //服务器返回json格式数据
-						type: 'get', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						success: function(data, textStatus, xhr) {
-							waiting.close();
-							//服务器返回响应，根据响应结果，分析是否登录成功；
-							if (data) {
-								var success = data.success;
-								if (success) {
-									var rows = data.result || data.rows;
-									if (rows && rows.length > 0) {
-										var tmp = ['<option value="0">请选择...</option>'];
-										for (var i = 0; i < rows.length; i++) {
-											var item = rows[i];
-											tmp.push('<option value="', item.buildingId, '">', item.buildingName, '</option>')
-										}
-										housesBox.innerHTML = tmp.join('');
-									}
-								}
-							}
-						}
-					});
+					
+					initBuilding();					
 				});
+				
 				// 添加提交按钮时间
 				submitButton.addEventListener('tap', function(event) {
 					console.log("remark:" + remarkBox.value);
@@ -246,7 +252,9 @@
 								var rows = data.result || data.rows;
 								console.log("rows:" + rows);
 								if (rows && rows.length > 0) {
-									var tmp = ['<option value="0">请选择...</option>'];
+									var tmp = [];
+									//去掉请选择选型，直接显示城市列表
+									//tmp.push('<option value="0">请选择...</option>');
 									for (var i = 0; i < rows.length; i++) {
 										var item = rows[i];
 										tmp.push('<option value="', item.cityId, '">', item.cityName, '</option>');
@@ -256,6 +264,7 @@
 										return;
 									}
 									cityBox.innerHTML = tmp.join('');
+									initBuilding();	
 								}
 							}
 						}

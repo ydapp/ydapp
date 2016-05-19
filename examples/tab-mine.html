@@ -229,7 +229,11 @@
 				<div class="mui-input-row">
 					<input id='contact' type="text" class="mui-input-clear  contact" placeholder="(选填,方便我们联系你 )" />
 				</div>
+				
 				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
+				联系客服：<br>	
+				电话：150 0519 6684		QQ  ：2960 7839
+				
 			</div>
 		</div>
 	</body>
@@ -331,7 +335,9 @@
 						详情
 					</div>
 					<div class="mui-table-cell mui-col-xs-8">
-						{{remark}}
+						{{each remark}}
+						{{$value}}</p>
+						{{/each}}
 					</div>
 				</div>
 			</li>
@@ -357,6 +363,20 @@
 					</div>
 				</div>
 			</li>
+			
+			{{if statusTitle != '确' }}
+				<li>
+					<div class=" mui-table ">
+						<div class="mui-table-cell mui-col-xs-4">
+						</div>
+						<div class="mui-table-cell mui-col-xs-8">
+							<button id='appendRemarkId' type="button" class="mui-btn mui-btn-green" onclick="app.recommendAppendRemark('{{recommendId}}',app.recommendAppendRemarkCallback)">追加详情</button>
+						</div>
+					</div>
+				</li>
+			{{/if}}
+				
+			
 		</ul>
 	</script>
 	<script type="text/javascript" charset="utf-8">
@@ -704,6 +724,13 @@
 							data.result.recommendConfirmAdvice = recommendConfirmAdvice;
 						} else {
 							data.result.recommendConfirmAdvice = new Array();
+						}
+						var remark = data.result.remark;
+						if (remark){
+							remark = remark.split("\n\r");
+							data.result.remark = remark;
+						} else {
+							data.result.remark = new Array();
 						}
 						var html = template('tmpl_recommendInfo', data.result);
 						recommendInfo.innerHTML = html;

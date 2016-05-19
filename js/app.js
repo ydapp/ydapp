@@ -5,7 +5,7 @@
  **/
 (function($, owner) {
 
-	var host = "http://192.168.1.103:8080/pisWeb";
+	var host = "http://172.23.46.2:8080/pisWeb";
 	// 服务器上的环境
 //	var host = "http://123.57.4.104:38034/pisWeb";
 	var conf = {
