@@ -364,20 +364,57 @@
 				</div>
 			</li>
 			
-			{{if statusTitle != '确' }}
+			
 				<li>
 					<div class=" mui-table ">
 						<div class="mui-table-cell mui-col-xs-4">
+							<center>
+								{{if statusTitle != '确' }}
+									<button id='appendRemarkId' type="button" class="mui-btn mui-btn-green" onclick="app.recommendAppendRemark('{{recommendId}}',app.recommendAppendRemarkCallback)">追加详情</button>
+								{{/if}}
+							</center>
 						</div>
 						<div class="mui-table-cell mui-col-xs-8">
-							<button id='appendRemarkId' type="button" class="mui-btn mui-btn-green" onclick="app.recommendAppendRemark('{{recommendId}}',app.recommendAppendRemarkCallback)">追加详情</button>
+							<center>
+								{{if buildingTel}}
+									<a type="button" id="id_propertyTel" class="mui-btn mui-btn-primary" href="tel:{{buildingTel}}">
+										<span class="mui-icon mui-icon-phone"></span>案场电话
+									</a>
+								{{else}}
+									<a type="button" id="id_propertyTel" class="mui-btn mui-btn-primary" href="#buildingTelPopover">
+										<span class="mui-icon mui-icon-phone"></span>案场电话
+									</a>
+								{{/if}}
+								
+								{{if buildingCommissioner}}
+									<a type="button" id="id_commissionerTel" class="mui-btn mui-btn-primary" href="tel:{{buildingCommissioner}}">
+										<span class="mui-icon mui-icon-phone"></span>案场专员
+									</a>
+								{{else}}
+									<a type="button" id="id_commissionerTel" class="mui-btn mui-btn-primary" href="#commissionerTelPopover">
+										<span class="mui-icon mui-icon-phone"></span>案场专员
+									</a>
+								{{/if}}
+								
+							</center>
 						</div>
 					</div>
 				</li>
-			{{/if}}
-				
-			
 		</ul>
+		<div id="buildingTelPopover" class="mui-popover">
+			<ul class="mui-table-view">
+				{{each buildingTels}}
+				<li class="mui-table-view-cell"><a href="tel:{{$value}}">{{$value}}</a></li>
+				{{/each}}
+			</ul>
+		</div>
+		<div id="commissionerTelPopover" class="mui-popover">
+			<ul class="mui-table-view">
+				{{each buildingCommissioners}}
+				<li class="mui-table-view-cell"><a href="tel:{{$value.tel}}">{{$value.nick}}({{$value.tel}})</a></li>
+				{{/each}}
+			</ul>
+		</div>
 	</script>
 	<script type="text/javascript" charset="utf-8">
 		(function(mui, doc) {
@@ -718,6 +755,7 @@
 				var recommendInfo = document.getElementById('recommendInfo');
 				app.getRecommendDetail(recommendId, function(data) {
 					if (data.success) {
+						//处理意见信息
 						var recommendConfirmAdvice = data.result.recommendConfirmAdvice;
 						if (recommendConfirmAdvice){
 							recommendConfirmAdvice = recommendConfirmAdvice.split("\n\r");
@@ -725,12 +763,24 @@
 						} else {
 							data.result.recommendConfirmAdvice = new Array();
 						}
+						//处理详情信息
 						var remark = data.result.remark;
 						if (remark){
 							remark = remark.split("\n\r");
 							data.result.remark = remark;
 						} else {
 							data.result.remark = new Array();
+						}
+						//处理案场电话信息
+						var buildingTels = data.result.buildingTels;
+						console.log("案场电话数量:" + buildingTels.length);
+						if (buildingTels.length == 1){
+							data.result.buildingTel = buildingTels[0];
+						}
+						//处理案场专员列表
+						console.log("案场专员数量:" + data.result.buildingCommissioners.length);
+						if (data.result.buildingCommissioners.length == 1){
+							data.result.buildingCommissioner = data.result.buildingCommissioners[0].tel;
 						}
 						var html = template('tmpl_recommendInfo', data.result);
 						recommendInfo.innerHTML = html;
