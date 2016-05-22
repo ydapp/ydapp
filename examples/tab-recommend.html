@@ -66,6 +66,7 @@
 			</form>
 			<div class="mui-content-padded">
 				<button id='submitBtn' class="mui-btn mui-btn-block mui-btn-primary">立刻推荐</button>
+				<button onclick="findAddressBook()" style="display: none;">findAddressBook</button>
 			</div>
 		</div>
 		</div>
@@ -271,7 +272,47 @@
 					}
 				});
 			};
+			findAddressBook = function(){
+				plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function (addressbook) {
+					addressbook.find(["displayName","phoneNumbers"],function(contacts){
+						contact_arr = [];
+						for (var i = 0; i < contacts.length; i++) {
+							//contact_arr_text是contact_arr数据源中每一个item用于显示的值 此处为联系人名称+手机号
+							//这里一定要判断联系人名称不为空 一旦漏判undefined后面所有逻辑都不会执行!!
+							if (contacts[i] !== undefined && contacts[i].displayName !== undefined) {
+								//判断用户的手机号码不为空时 取手机号码
+								if (contacts[i].phoneNumbers[0] !== undefined) {
+									var contact_arr_text = contacts[i].displayName + "\t" + contacts[i].phoneNumbers[0].value;
+								} else if (contacts[i].phoneNumbers[1] !== undefined) {
+									//若手机号为空 则判断住宅号是否为空 不为空就用住宅号码 若住宅号码也为空 这个用户就不显示了
+									var contact_arr_text = contacts[i].displayName + "\t" + contacts[i].phoneNumbers[1].value;
+								}
+							}
+							console.log(contact_arr_text);
+							//将数据传给数据源
+							contact_arr[i] = {
+								value: i,
+								text: contact_arr_text
+							};
+						}
+						//联系人数据提取关闭加载到选择器中
+						userPicker.setData(contact_arr);
+						userPicker.show(function(items) {
+							//
+							userResult.innerText = JSON.stringify(items[0]);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					
+					}, function () {
+						alert("error");
+					},{filter:[{logic:"or",field:"displayName",value:"*王*"},{logic:"or",field:"nickname",value:"*王*"}],multiple:true});
+				},function(e){
+					alert("Get address book failed: " + e.message);
+			});
+}
 		}(mui, document));
+		
 	</script>
 
 </html>

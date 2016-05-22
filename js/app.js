@@ -5,9 +5,9 @@
  **/
 (function($, owner) {
 
-	var host = "http://172.27.35.2:8080/pisWeb";
+	//var host = "http://172.27.35.2:8080/pisWeb";
 	// 服务器上的环境
-//	var host = "http://123.57.4.104:38034/pisWeb";
+	var host = "http://123.57.4.104:38034/pisWeb";
 	var conf = {
 		host: host,
 		regUrl: host + "/api/addUser.json", // 用户注册

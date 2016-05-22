@@ -231,9 +231,10 @@
 				</div>
 				
 				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
+				<div>
 				联系客服：<br>	
-				电话：150 0519 6684		QQ  ：2960 7839
-				
+				电话：150 0519 6684		&nbsp;&nbsp;QQ  ：2960 7839
+				</div>
 			</div>
 		</div>
 	</body>
@@ -369,7 +370,7 @@
 					<div class=" mui-table ">
 						<div class="mui-table-cell mui-col-xs-4">
 							<center>
-								{{if statusTitle != '确' }}
+								{{if statusTitle != '报备已确认' }}
 									<button id='appendRemarkId' type="button" class="mui-btn mui-btn-green" onclick="app.recommendAppendRemark('{{recommendId}}',app.recommendAppendRemarkCallback)">追加详情</button>
 								{{/if}}
 							</center>
