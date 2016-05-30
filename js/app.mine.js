@@ -428,7 +428,7 @@
 	};
 	owner.getRecommendStatusName = function(status) {
 		if ("confirm" == status) {
-			return "确";
+			return "结";
 		} else if ("buy" == status) {
 			return "购";
 		} else if ("order" == status) {
