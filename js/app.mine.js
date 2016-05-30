@@ -58,7 +58,7 @@
 			}
 		});
 	};
-	//到场操作
+	//驻场专用操作
 	owner.customerPresent = function(recommendId, callback) {
 		var state = app.getState() || {};
 		var user = state.user || {};
@@ -111,6 +111,45 @@
 		}
 	};
 
+	//获取等待来确定
+	owner.waitingCome=function(callback){
+		var state = app.getState() || {};
+		var user = state.user || {};
+		var userId = user.userId;
+		//这里报plus未定义，先注释掉
+		//var waiting = plus.nativeUI.showWaiting("正在获取报备列表，请等待...");
+		mui.ajax(host + '/api/recommends/waitingCome/' + userId + '.json', {
+			dataType: 'json', //服务器返回json格式数据
+			type: 'get', //HTTP请求类型
+			timeout: 30000, //超时时间设置为10秒；
+			success: function(data, textStatus, xhr) {
+				//报waiting没有定义
+				//waiting.close();
+				//服务器返回响应，根据响应结果，分析是否登录成功；
+				if (data) {
+					var success = data.success;
+					if (success) {
+						return callback(data.result);
+					} else {
+						return callback(data.message || '获取报备待确认列表失败。');
+					}
+				} else {
+					callback('获取报备待确认列表失败。');
+				}
+			},
+			error: function(xhr, type, errorThrown) {
+				alert("获取报备待确认列表失败")
+					//这个waiting也说没有定义
+					//waiting.close();
+					//异常处理；
+				if (type == conf.timeout) {
+					callback('系统超时，请检测网络');
+				} else {
+					callback('获取到场列表失败，请稍候重试。');
+				}
+			}
+		});
+	}
 	//获取等待到场确认列表
 	owner.waitingConfirm = function(callback) {
 		var state = app.getState() || {};
@@ -150,9 +189,9 @@
 			}
 		});
 	};
-	//驻场专员操作
+	//渠道经理操作
 	owner.recommendConfirm = function(recommendId, callback) {
-		console.log("驻场专员对报备信息进行操作：" + recommendId);
+		console.log("渠道经理对报备信息进行操作：" + recommendId);
 		
 		mui.prompt('请输出意见','请输入意见','驻场专员意见',['取消','确定'],function(e){
 			var confirmAdvice = e.value;
@@ -330,15 +369,23 @@
 		});
 	};
 	
-	//获取我的已经到场的报备信息
-	owner.getMyConfirmDoing = function(callback) {
+	owner.getMyConfirmDoing=function(callback){
 		var userId = this.getUserId();
 		this.getMyConfirm(host + '/api/recommends/confirmed/doing/' + userId + '.json',callback);
 	}
-	//获取我的已经到场的报备信息
-	owner.getMyConfirmDone = function(callback) {
+	owner.getMyConfirmDone=function(callback){
 		var userId = this.getUserId();
 		this.getMyConfirm(host + '/api/recommends/confirmed/done/' + userId + '.json',callback);
+	}
+	//获取我的已经到场的报备信息
+	owner.getMyWaitingComeDoing = function(callback) {
+		var userId = this.getUserId();
+		this.getMyConfirm(host + '/api/recommends/waitingCome/doing/' + userId + '.json',callback);
+	}
+	//获取我的已经到场的报备信息
+	owner.getMyWaitingComeDone = function(callback) {
+		var userId = this.getUserId();
+		this.getMyConfirm(host + '/api/recommends/waitingCome/done/' + userId + '.json',callback);
 	}
 	//获取我的已经到场的报备信息
 	owner.getMyConfirm = function(url,callback) {
