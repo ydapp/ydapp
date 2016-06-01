@@ -193,7 +193,7 @@
 	owner.recommendConfirm = function(recommendId, callback) {
 		console.log("渠道经理对报备信息进行操作：" + recommendId);
 		
-		mui.prompt('请输出意见','请输入意见','驻场专员意见',['取消','确定'],function(e){
+		mui.prompt('请输出意见','请输入意见','渠道经理意见',['取消','确定'],function(e){
 			var confirmAdvice = e.value;
 			console.log("意见:" + confirmAdvice);
 			if (e.index == 1){
@@ -210,14 +210,14 @@
 					timeout: 30000, //超时时间设置为10秒；
 					success: function(data, textStatus, xhr) {
 						waiting.close();
-						console.log("驻场专员操作成功");
+						console.log("渠道经理操作成功");
 						//服务器返回响应，根据响应结果，分析是否登录成功；
 						if (data) {
 							var success = data.success;
 							if (success) {
 								//自动移除这一行
 								var _el = document.getElementById(recommendId);
-								console.log("驻场专员操作recommendId:" + recommendId + " 操作成功");
+								console.log("渠道经理操作recommendId:" + recommendId + " 操作成功");
 								//loadTODO();
 								return callback("确认操作成功");
 							} else {
