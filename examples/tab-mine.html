@@ -389,11 +389,11 @@
 								
 								{{if buildingCommissioner}}
 									<a type="button" id="id_commissionerTel" class="mui-btn mui-btn-primary" href="tel:{{buildingCommissioner}}">
-										<span class="mui-icon mui-icon-phone"></span>案场专员
+										<span class="mui-icon mui-icon-phone"></span>驻场专员
 									</a>
 								{{else}}
 									<a type="button" id="id_commissionerTel" class="mui-btn mui-btn-primary" href="#commissionerTelPopover">
-										<span class="mui-icon mui-icon-phone"></span>案场专员
+										<span class="mui-icon mui-icon-phone"></span>驻场专员
 									</a>
 								{{/if}}
 								
@@ -879,7 +879,7 @@
 							data.result.buildingTel = buildingTels[0];
 						}
 						//处理案场专员列表
-						console.log("案场专员数量:" + data.result.buildingCommissioners.length);
+						console.log("驻场专员数量:" + data.result.buildingCommissioners.length);
 						if (data.result.buildingCommissioners.length == 1){
 							data.result.buildingCommissioner = data.result.buildingCommissioners[0].tel;
 						}
