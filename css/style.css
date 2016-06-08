@@ -46,3 +46,14 @@ body {
 .mui-input-row label~textarea {
 	margin-top: 1px;
 }
+
+.login-foot{
+	text-align: center;
+	height: 60px;
+}
+.versions{
+	font: 14px 宋体;
+	color: #464646;
+	height: 20px;
+}
+
