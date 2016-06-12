@@ -899,7 +899,7 @@
 				}
 				app.getMyPhonebook(function(data) {
 					if (waiting && waiting.close) {
-						waiting.close();
+
 					}
 					console.log("通讯录:" + data);
 					for (o in data){
@@ -919,7 +919,7 @@
 				if (mui.os.ios) {
 					app.setState({});
 					mui.openWindow({
-						url: 'login.html',
+						url: '/login.html',
 						id: 'login',
 						show: {
 							aniShow: 'pop-in'
