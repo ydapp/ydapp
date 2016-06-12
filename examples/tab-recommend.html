@@ -204,7 +204,6 @@
 			 * 初始化楼盘信息，外部调用
 			 */
 			window.addEventListener('initBuilding',function(event){
-				
 				var buildObj = event.detail;
 				console.log("initBuiding被调用,参数building:" + buildObj);
 				console.log("building.propertyId:" + buildObj.propertyId);
@@ -212,6 +211,9 @@
 				console.log("building.city:" + buildObj.city);
 				console.log("building.cityTitle:" + buildObj.cityTitle);
 				if (buildObj){
+					console.log("外部调用推荐页面,设置返回");
+					var backElem = document.getElementById("back");
+					backElem.style.display = "block";
 					buildingOK = true;
 					console.log("添加城市数据");
 					var cityOptionString = '<option value="' + buildObj.city + '">' + buildObj.cityTitle + '</option>';
