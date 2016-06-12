@@ -69,7 +69,6 @@
 				<button onclick="findAddressBook()" style="display: none;">findAddressBook</button>
 			</div>
 		</div>
-		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/app.js"></script>
@@ -87,7 +86,7 @@
 						ws.hide('auto');
 					};
 					app.initPage();
-				}
+				} 
 			});
 			// 处理页面
 			var loginForm = doc.getElementById("login-form");
@@ -169,7 +168,6 @@
 				});
 				*/
 				cityBox.addEventListener('change', function() {
-					
 					initBuilding();					
 				});
 				
@@ -211,6 +209,7 @@
 				console.log("building.city:" + buildObj.city);
 				console.log("building.cityTitle:" + buildObj.cityTitle);
 				if (buildObj){
+					app.initPage();
 					console.log("外部调用推荐页面,设置返回");
 					var backElem = document.getElementById("back");
 					backElem.style.display = "block";
