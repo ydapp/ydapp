@@ -280,20 +280,23 @@
 							document.getElementById("goSubscriptionRules").title=building.subscriptionRules;
 							//电话格式如下“姓名:电话”有多个时候用分号隔开“案场:123;张三:456”
 							console.log("tel:" + building.propertyTel);
+							//默认显示案场本身电话
 							var tels = building.propertyTel.split(";");
-							if (tels.length == 1){
+							var telObj = tels[0].split(":");
+							document.getElementById("id_propertyTel").href="tel:" + telObj[1];
+							/*if (tels.length == 1){
 								var telObj = tels[0].split(":");
 								document.getElementById("id_propertyTel").href="tel:" + telObj[1];
 							} else {
 								document.getElementById("id_propertyTel").href="#commissionerTelPopover";
 								var liString = "";
 								for (var i = 0; i < tels.length; i++){
-									var telObj = tels[i].split(":");
+									var telObj = tels[0].split(":");
 									liString += "<li class=\"mui-table-view-cell\"><a href=\"tel:" + telObj[1] + "\">" + telObj[0] + "(" + telObj[1] + ")</a></li>";
 								}
 								console.log("liString:" + liString);
 								document.getElementById("commissionerTelPopoverUL").innerHTML=liString;
-							}
+							}*/
 							//如果只有一个电话，则直接拨号，如果有多个电话则使用列表选择的模式
 							
 							
