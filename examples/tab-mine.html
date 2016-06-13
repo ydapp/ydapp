@@ -899,7 +899,7 @@
 				}
 				app.getMyPhonebook(function(data) {
 					if (waiting && waiting.close) {
-
+						waiting.close();
 					}
 					console.log("通讯录:" + data);
 					for (o in data){
