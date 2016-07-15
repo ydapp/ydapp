@@ -150,6 +150,48 @@
 			}
 		});
 	}
+	owner.doChangerPwd = function(newPwd,callback){
+		var state = app.getState() || {};
+		var user = state.user || {};
+		var userName = user.loginName;
+		console.log("调用修改密码方法");
+		mui.ajax(host+'/api/staff/changePassword.json',{
+			dataType:'json',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			data:{
+				pwd1:newPwd,
+				loginName:userName
+			},
+			success:function(data){
+				if(data){
+					return callback(data.success);
+				}
+			}
+		});
+	}
+	//验证登录密码是否正确
+	owner.checkPassword = function(pwd,callback){
+		var state = app.getState() || {};
+		var user = state.user || {};
+		var userName = user.loginName;
+		console.log("调用验证密码方法：");
+		mui.ajax(host+'/api/staff/checkPassword.json',{
+			dataType:'json',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			data:{
+				oldPwd:pwd,
+				loginName:userName
+			},
+			success:function(data){
+				if(data){
+					return callback(data.success);
+				}
+			}
+		});
+		console.log("调用验证密码方法结束" );
+	}
 	//获取等待到场确认列表
 	owner.waitingConfirm = function(callback) {
 		var state = app.getState() || {};
