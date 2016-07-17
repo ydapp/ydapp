@@ -154,6 +154,9 @@
 		var state = app.getState() || {};
 		var user = state.user || {};
 		var userName = user.loginName;
+		//清理缓存名称
+		var cacheSource="pisp";
+		var cacheName="userCache";
 		console.log("调用修改密码方法");
 		mui.ajax(host+'/api/staff/changePassword.json',{
 			dataType:'json',//服务器返回json格式数据
@@ -161,7 +164,9 @@
 			timeout:10000,//超时时间设置为10秒；
 			data:{
 				pwd1:newPwd,
-				loginName:userName
+				loginName:userName,
+				cacheSource:cacheSource,
+				cacheName:cacheName
 			},
 			success:function(data){
 				if(data){
