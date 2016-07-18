@@ -502,6 +502,12 @@
 					} else {
 						userExtend = "未配置楼盘";
 					}
+				} else if(userModel.groupType == 'channelManager'){
+					 if(userModel.cityName && userModel.propertyName){
+						userExtend = userModel.cityName+"("+userModel.propertyName+")";
+					 }else{
+					 	userExtend = "未配置楼盘";
+					 }
 				}
 				userRoleTitle = userModel.groupTypeTitle + "【" + userExtend + "】";
 				console.log("userRoleTitle:" + userRoleTitle);
