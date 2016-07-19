@@ -13,7 +13,7 @@
 	<body>
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<img id="img" src="../images/u26.png" style="width: 100%;padding: 5px;" />
+				<img id="img" src="../images/u26.png" style="width: 100%;height:161px;padding: 5px;" />
 				<ul id="myList" class="mui-table-view">
 
 				</ul>
@@ -91,6 +91,7 @@
 						mui('#pullrefresh').pullRefresh().endPullupToRefresh(over); 
 					}
 				});
+				getInfoBanner();
 			}
 
 			function getInfoBanner(){
@@ -99,7 +100,7 @@
 					type:'post',//HTTP请求类型
 					timeout:10000,//超时时间设置为10秒；
 					success:function(data){
-						if(data){
+						if(data&&data.result){
 							var path = app.conf.host+"/"+data.result.savePath;
 							document.getElementById("img").src=path;
 						}
