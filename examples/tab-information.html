@@ -13,7 +13,7 @@
 	<body>
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<img src="../images/u26.png" style="width: 100%;padding: 5px;" />
+				<img id="img" src="../images/u26.png" style="width: 100%;padding: 5px;" />
 				<ul id="myList" class="mui-table-view">
 
 				</ul>
@@ -26,6 +26,7 @@
 	<script src="../js/app.template.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		(function(mui, doc) {
+			getInfoBanner();
 			//mui初始化
 			mui.init({
 				pullRefresh: {
@@ -92,6 +93,19 @@
 				});
 			}
 
+			function getInfoBanner(){
+				mui.ajax(app.conf.infoBanner,{
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						if(data){
+							var path = app.conf.host+"/"+data.result.savePath;
+							document.getElementById("img").src=path;
+						}
+					}
+				});
+			}
 			function pullupLoad() {
 				console.log("pullupLoad 往上推");
 				// 初始化数据

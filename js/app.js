@@ -7,7 +7,9 @@
 
 	//var host = "http://172.27.35.2:8080/pisWeb";
 	// 服务器上的环境
-	var host = "http://123.57.4.104:38034/pisWeb";
+	//var host = "http://123.57.4.104:38034/pisWeb";
+	var host = "http://121.199.12.101:8080/pisWeb"
+	//var host="http://10.45.32.15:8989/pisWeb";
 	var conf = {
 		host: host,
 		regUrl: host + "/api/addUser.json", // 用户注册
@@ -16,8 +18,9 @@
 		cityListUrl: host + "/api/getCitys.json", // 城市列表
 		propertyListUrl: host + "/api/properties.html", // 楼盘裂变
 		propertyDetailUrl: host + "/api/property.html", // 楼盘详情
-		infoListUrl: host + "/api/articles.json", // 咨询列表
-		infoDetailUrl: host + "/api/article.html", // 咨询详情
+		infoListUrl: host + "/api/articles.json", // 资讯列表
+		infoDetailUrl: host + "/api/article.html", // 资讯详情
+		infoBanner:host+"/admin/article/getInfoBanner.json",//咨询横幅
 		userGroupUrl: host + "/api/user/group.json", // 用户组信息
 		timeout: "timeout" // 超时标识
 	};
@@ -139,7 +142,7 @@
 			return callback('请输入密码');
 		}
 		var waiting = plus.nativeUI.showWaiting("登录中，请等待...");
-		loginInfo.deviceId = plus.device.imei || "unknown";
+		loginInfo.deviceId = " "==plus.device.imei?"unknown":plus.device.imei;
 		mui.ajax(conf.loginUrl, {
 			data: loginInfo,
 			dataType: 'json', //服务器返回json格式数据
