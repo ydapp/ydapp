@@ -26,6 +26,9 @@
 					<input id='password' type="password" class="mui-input-password mui-input" placeholder="请输入密码">
 				</div>
 			</form>
+			<div style="text-align:right;">
+				<input id="remeberPassword" type="checkbox" value="1" />记住密码
+			</div>
 			<div class="mui-input-group" style="display: none;">
 				<ul class="mui-table-view mui-table-view-radio">
 					<li class="mui-table-view-cell mui-selected">
@@ -53,7 +56,7 @@
 			</div>
 			
 			<div class="login-foot">
-				<span class="versions">版本(1.4.6)</span>
+				<span class="versions">版本(1.4.7)</span>
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
@@ -105,6 +108,7 @@
 					var autoLoginButton = doc.getElementById("autoLogin");
 					var forgetButton = doc.getElementById('forgetPassword');
 					var regButton = doc.getElementById('reg');
+					var remeberNum =doc.getElementById("remeberPassword")
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							userName: userNameBox.value,
@@ -115,8 +119,40 @@
 								plus.nativeUI.toast(err);
 								return;
 							}
+							if(remeberNum.checked){
+								plus.storage.setItem(loginInfo.userName,loginInfo.password);
+							}else{
+								plus.storage.removeItem(loginInfo.userName);
+							}
 							toMain();
 						});
+					});
+					/**
+					 * 设置用户名密码框事件
+					 */
+					userNameBox.addEventListener("input",function(){
+						if(null != plus.storage.getItem(this.value)){
+							remeberNum.checked = true;
+						}else{
+							emeberNum.checked = false;
+						}
+						if(remeberNum.checked){
+							passwordBox.value = plus.storage.getItem(this.value);
+							return;
+						}
+						if(!remeberNum.checked){
+							plus.storage.removeItem(this.value);
+							return;
+						}
+					});
+					/**
+					 * 绑定复选框事件
+					 */
+					remeberNum.addEventListener("tap",function(){
+						if(!remeberNum.checked){
+							plus.storage.removeItem(this.value);
+							return;
+						}
 					});
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
