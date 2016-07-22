@@ -80,6 +80,7 @@
 						if (_el) {
 							_el.style.display = 'none';
 							_el.parentNode.removeChild(_el);
+							//_el.reload(true);
 						}
 						return callback("客户到场操作成功");
 					} else {
@@ -264,6 +265,9 @@
 							if (success) {
 								//自动移除这一行
 								var _el = document.getElementById(recommendId);
+								if(_el){
+									mui.back(true);
+								}
 								console.log("渠道经理操作recommendId:" + recommendId + " 操作成功");
 								//loadTODO();
 								return callback("确认操作成功");
