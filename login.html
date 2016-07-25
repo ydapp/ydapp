@@ -12,11 +12,12 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<div class="mui-content-padded" style="text-align: center;padding: 50px 0 30px;">
+		<div class="mui-content" >
+			<div class="mui-content-padded" style="text-align: center;padding:20px 0 0px;">
 				<h1 style="font-size: 48px;">团家宝经纪人</h1>
+				<img alt="head" src="images/loginHead.png" width="50%" />
 			</div>
-			<form id='login-form' class="mui-input-group">
+			<form id='login-form' class="mui-input-group" style="margin-top:-20px;;">
 				<div class="mui-input-row">
 					<label>账号</label>
 					<input id='userName' type="text" class="mui-input-clear mui-input" placeholder="请输入账号" value="">
@@ -25,9 +26,10 @@
 					<label>密码</label>
 					<input id='password' type="password" class="mui-input-password mui-input" placeholder="请输入密码">
 				</div>
-			</form>
-			<div style="text-align:right;">
-				<input id="remeberPassword" type="checkbox" value="1" />记住密码
+			</form> 
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label style="margin-left:-10px;margin-top:-3px;">记住密码</label>
+				<input id="remeberPassword" name="checkbox" value="1" type="checkbox">
 			</div>
 			<div class="mui-input-group" style="display: none;">
 				<ul class="mui-table-view mui-table-view-radio">
@@ -49,7 +51,7 @@
 					</li>
 				</ul>
 			</div>-->
-			<div class="mui-content-padded">
+			<div class="mui-content-padded" style="margin-top:25px;">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 				<div class="link-area" style="display: none;"><a id='forgetPassword'>忘记密码</a> <span class="spliter">|</span> <a id='reg'>注册账号</a>
 				</div>
