@@ -239,7 +239,7 @@
 					<input id='contact' type="text" class="mui-input-clear  contact" placeholder="(选填,方便我们联系你 )" />
 				</div>
 				<div class="mui-content-padded">
-					<button  id='submit' type="button" class="mui-btn mui-btn-success mui-btn-block">提交</button>
+					<button  id='submit' type="button" class="mui-btn mui-btn-primary mui-btn-block">提交</button>
 				</div>
 			<div>
 				联系客服：<br>	
@@ -1014,11 +1014,17 @@
 			 * 绑定检查更新按钮
 			 */
 			document.getElementById('update').addEventListener('tap',function(){
-				if(window.plus){
-				    plusReady();
+				if (mui.os.ios) {
+					var url="https://itunes.apple.com/cn/app/tuan-jia-bao-jing-ji-ren/id1128294369?mt=8";
+					window.location.href=url;
 				}else{
-				    document.addEventListener('plusready',plusReady,false);
+					if(window.plus){
+				    	plusReady();
+					}else{
+				   	 	document.addEventListener('plusready',plusReady,false);
+					}
 				}
+				
 			});
 			var wgtVer=null;
 			var serverUrl ="http://demo.dcloud.net.cn/test/update/check.php";

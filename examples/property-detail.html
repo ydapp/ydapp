@@ -159,9 +159,9 @@
 				</div>
 				<div class="mui-col-xs-3" style="border-left: 1px solid #c8c7cc;">
 					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
-						<a class="mui-control-item mui-active" href="#content1">楼盘介绍</a>
-						<a class="mui-control-item" href="#content2">交通配套</a>
-						<a class="mui-control-item" href="#content3">户型介绍</a>
+						<a class="mui-control-item mui-active" id="content1_a" style="" href="#content1">楼盘介绍</a>
+						<a class="mui-control-item" id="content2_a" href="#content2">交通配套</a>
+						<a class="mui-control-item" id="content3_a" href="#content3">户型介绍</a>
 					</div>
 				</div>
 			</div>
@@ -241,6 +241,27 @@
 				document.getElementById("goSubscriptionRules").addEventListener('tap', function(e) {
 					alert(this.title);
 				});
+				var content1_obj = document.getElementById("content1_a");
+				var content2_obj = document.getElementById("content2_a");
+				var content3_obj = document.getElementById("content3_a");
+				document.getElementById("content1_a").addEventListener('tap',function(e){
+					this.innerHTML='<img src="../images/1.png" width="80px;" height="45px;" style="margin:0 auto;"/>';
+					this.style.paddingTop="10px";
+					content2_obj.innerHTML="交通配套";
+					content3_obj.innerHTML="户型介绍";
+				});
+				document.getElementById("content2_a").addEventListener('tap',function(e){
+					this.innerHTML='<img src="../images/2.png" width="80px;" height="45px;"style="margin:0 auto;"/>';
+					this.style.paddingTop="10px";
+					content1_obj.innerHTML="楼盘介绍";
+					content3_obj.innerHTML="户型介绍";
+				});
+				document.getElementById("content3_a").addEventListener('tap',function(e){
+					this.innerHTML='<img src="../images/3.png" width="80px;" height="45px;"style="margin:0 auto;"/>';
+					this.style.paddingTop="10px";
+					content1_obj.innerHTML="楼盘介绍";
+					content2_obj.innerHTML="交通配套";
+				});
 				// 获得请求页面时携带的参数
 				var params = {};
 				(function() {
@@ -258,6 +279,8 @@
 						params[name] = value;
 					}
 				})();
+				content1_obj.innerHTML='<img src="../images/1.png" width="80px;" height="45px;" style="margin:0 auto;"/>';
+				content1_obj.style.paddingTop="10px";
 				// 获得页面宽度
 				params.viewWidth = document.body.clientWidth;
 				mui.ajax(app.conf.host + "/api/property/" + params.index + ".json", {
