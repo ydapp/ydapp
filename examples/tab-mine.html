@@ -69,14 +69,20 @@
 								<a href="#feedback" class="mui-navigate-right">问题反馈</a>
 							</li>
 							<li class="mui-table-view-cell">
+								<a id="update" href="#update" class="mui-navigate-right">检查更新</a>
+							</li>
+							<li class="mui-table-view-cell">
 								<a href="#about" class="mui-navigate-right">关于团家宝经纪人 <i class="mui-pull-right update">V1.4.7</i></a>
 							</li>
 						</ul>
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell" style="text-align: center;">
-								<a id='exit'>退出</a>
+						<div class="mui-content-padded">
+							<button id='exit' type="button" class="mui-btn mui-btn-danger mui-btn-block">退出</button>
+						</div>
+						<!--<ul class="mui-table-view" style="width:80%;">
+							<li class="mui-table-view-cell" style="text-align:center;background-color:#DD524D;">
+								<a >退出</a>
 							</li>
-						</ul>
+						</ul>-->
 					</div>
 				</div>
 			</div>
@@ -1002,6 +1008,104 @@
 					mui.alert('密码修改成功!', '提示信息', function() {
 						mui.back();
 					});
+				});
+			}
+			/**
+			 * 绑定检查更新按钮
+			 */
+			document.getElementById('update').addEventListener('tap',function(){
+				if(window.plus){
+				    plusReady();
+				}else{
+				    document.addEventListener('plusready',plusReady,false);
+				}
+			});
+			var wgtVer=null;
+			var serverUrl ="http://demo.dcloud.net.cn/test/update/check.php";
+			function plusReady(){
+			   // 获取本地应用资源版本号
+		    	plus.runtime.getProperty(plus.runtime.appid,function(inf){
+			        wgtVer=inf.version;
+			        console.log("当前应用版本："+wgtVer);
+			        checkUpdate();
+		    	});
+			}
+			/**
+			 * 检查更新
+			 */
+			function checkUpdate(){
+				console.log("进入检查更新！");
+				plus.nativeUI.showWaiting("检测更新.....")
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange=function(){
+					switch(xhr.readyState){
+						case 1:
+							console.log("服务器连接已经建立");break;
+						case 2:
+							console.log("请求已经接收!");break;
+						case 3:
+							console.log("请求处理中!");break;
+						case 4:
+						plus.nativeUI.closeWaiting();
+						if(xhr.status == 200){
+							console.log("检测更新成功:"+xhr.responseText);
+							var newVer=xhr.responseText;
+							if(wgtVer&&newVer&&(wgtVer!=newVer)){
+								downWgt();
+							}else{
+								plus.nativeUI.alert("无可更新版本!")
+							}
+						}else{
+							console.log("检测更新失败!")
+							plus.nativeUI.alert("检测更新失败!")
+						}
+						break;
+			            default:
+			            break;
+					}
+				};
+				xhr.open('GET',serverUrl);
+				xhr.send();
+			}
+			/**
+			 * 下载更新文件
+			 */
+			var wgtUrl = "http://123.57.4.104:38034/pisWeb/hbuilder.wgt";
+			function downWgt(){
+				plus.nativeUI.showWaiting("下载更新文件.....");
+				plus.downloader.createDownload(wgtUrl,{},function(d,status){
+					if(status == 200){
+						console.log("下载wgt成功:"+d.filename);
+						installWgt(d.filename);
+			 		}else{
+						console.log("下载更新失败!");
+						plus.nativeUI.alert("下载更新失败！")
+					}
+					plus.nativeUI.closeWaiting();
+				}).start();
+			}
+			/**
+			 * 安装更新文件
+			 * @param {Object} path
+			 */
+			function installWgt(path){
+				plus.nativeUI.showWaiting("安装更新文件....");
+				plus.runtime.install(path,{},function(){
+					plus.nativeUI.closeWaiting();
+					console.log("安装wgt文件成功!");
+					plus.nativeUI.alert("应用资源更新完成!",function(){
+						plus.runtime.restart();
+					});
+				},function(e){
+					plus.nativeUI.closeWaiting();
+					if(e.code == -1205){
+						console.log("安装wgt文件失败["+e.code+"]:"+e.message);
+						plus.nativeUI.alert("更新失败,没有新版本!");
+					}else{
+						console.log("安装wgt文件失败["+e.code+"]:"+e.message);
+						plus.nativeUI.alert("安装wgt文件失败["+e.code+"]:"+e.message);
+					}
+					
 				});
 			}
 			//加载报备确认数据（驻场专员）
