@@ -411,7 +411,7 @@
 						<div class="mui-table-cell mui-col-xs-4">
 							<center>
 								{{if statusTitle != '报备已确认' }}
-									<button id='appendRemarkId' type="button" class="mui-btn mui-btn-green" onclick="app.recommendAppendRemark('{{recommendId}}',app.recommendAppendRemarkCallback)">追加详情</button>
+									<button id='appendRemarkId' type="button" style="background-color: #37ADB0;border:0px;" class="mui-btn mui-btn-green" onclick="app.recommendAppendRemark('{{recommendId}}',app.recommendAppendRemarkCallback)">追加详情</button>
 								{{/if}}
 							</center>
 						</div>
@@ -428,11 +428,11 @@
 								{{/if}}-->
 								
 								{{if buildingCommissioner}}
-									<a type="button" id="id_commissionerTel" class="mui-btn mui-btn-primary" href="tel:{{buildingCommissioner}}">
+									<a type="button" id="id_commissionerTel" style="background-color: #37ADB0;border:0px;" class="mui-btn mui-btn-primary" href="tel:{{buildingCommissioner}}">
 										<span class="mui-icon mui-icon-phone"></span>驻场专员
 									</a>
 								{{else}}
-									<a type="button" id="id_commissionerTel" class="mui-btn mui-btn-primary" href="#commissionerTelPopover">
+									<a type="button" id="id_commissionerTel" style="background-color: #37ADB0;border:0px;" class="mui-btn mui-btn-primary" href="#commissionerTelPopover">
 										<span class="mui-icon mui-icon-phone"></span>驻场专员
 									</a>
 								{{/if}}
