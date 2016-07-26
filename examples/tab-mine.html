@@ -1083,7 +1083,11 @@
 					if(status == 200){
 						console.log("下载wgt成功:"+d.filename);
 						installWgt(d.filename);
-			 		}else{
+			 		}
+					if(status ==404){
+						console.log("下载更新失败!");
+						plus.nativeUI.alert("此版本为最新版本!")
+					}else{
 						console.log("下载更新失败!");
 						plus.nativeUI.alert("下载更新失败！")
 					}
@@ -1096,7 +1100,7 @@
 			 */
 			function installWgt(path){
 				plus.nativeUI.showWaiting("安装更新文件....");
-				plus.runtime.install(path,{},function(){
+				plus.runtime.install(path,{force:true},function(){
 					plus.nativeUI.closeWaiting();
 					console.log("安装wgt文件成功!");
 					plus.nativeUI.alert("应用资源更新完成!",function(){
@@ -1106,7 +1110,7 @@
 					plus.nativeUI.closeWaiting();
 					if(e.code == -1205){
 						console.log("安装wgt文件失败["+e.code+"]:"+e.message);
-						plus.nativeUI.alert("更新失败,没有新版本!");
+						plus.nativeUI.alert("此版本为最新版本!");
 					}else{
 						console.log("安装wgt文件失败["+e.code+"]:"+e.message);
 						plus.nativeUI.alert("安装wgt文件失败["+e.code+"]:"+e.message);
